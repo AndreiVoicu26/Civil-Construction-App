@@ -15,6 +15,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class DBUtils {
 
     public static void changeScene(ActionEvent event, String fxmlFile, String title, String username, String role) {
@@ -61,7 +66,7 @@ public class DBUtils {
             } else {
                 psInsert = connection.prepareStatement("INSERT INTO users (username, password, fullname, email, phone, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
                 psInsert.setString(1, username);
-                psInsert.setString(2, password);
+                psInsert.setString(2, toHexString(getSHA(password)));
                 psInsert.setString(3, fullName);
                 psInsert.setString(4, email);
                 psInsert.setString(5, phone);
@@ -71,7 +76,7 @@ public class DBUtils {
 
                 changeScene(event, "home.fxml", "Home",  username, role);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         } finally {
             if (resultSet != null) {
@@ -123,7 +128,7 @@ public class DBUtils {
                 while(resultSet.next()) {
                     String retrievedPassword = resultSet.getString("password");
                     String retrievedRole = resultSet.getString("role");
-                    if(retrievedPassword.equals(password)) {
+                    if(retrievedPassword.equals(toHexString(getSHA(password)))) {
                         changeScene(event, "home.fxml", "Home", username, retrievedRole);
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -132,7 +137,7 @@ public class DBUtils {
                     }
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         } finally {
             if (resultSet != null) {
@@ -159,24 +164,31 @@ public class DBUtils {
         }
     }
 
-    private static String encodePassword(String salt, String password) {
-        MessageDigest md = getMessageDigest();
-        md.update(salt.getBytes(StandardCharsets.UTF_8));
+    public static byte[] getSHA(String input) throws NoSuchAlgorithmException
+    {
+        /* MessageDigest instance for hashing using SHA512*/
+        MessageDigest md = MessageDigest.getInstance("SHA-512");
 
-        byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-
-        // This is the way a password should be encoded when checking the credentials
-        return new String(hashedPassword, StandardCharsets.UTF_8)
-                .replace("\"", ""); //to be able to save in JSON format
+        /* digest() method called to calculate message digest of an input and return array of byte */
+        return md.digest(input.getBytes(StandardCharsets.UTF_8));
     }
 
-    private static MessageDigest getMessageDigest() {
-        MessageDigest md;
-        try {
-            md = MessageDigest.getInstance("SHA-512");
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("SHA-512 does not exist!");
+    public static String toHexString(byte[] hash)
+    {
+        /* Convert byte array of hash into digest */
+        BigInteger number = new BigInteger(1, hash);
+
+        /* Convert the digest into hex value */
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+
+        /* Pad with leading zeros */
+        while (hexString.length() < 32)
+        {
+            hexString.insert(0, '0');
         }
-        return md;
+
+        return hexString.toString();
     }
+
+
 }

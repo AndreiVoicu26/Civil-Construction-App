@@ -74,10 +74,6 @@
                <font>
                   <Font size="15.0" />
                </font></TextField>
-            <TextField fx:id="tf_password" layoutX="363.0" layoutY="271.0" prefHeight="26.0" prefWidth="202.0">
-               <font>
-                  <Font size="15.0" />
-               </font></TextField>
             <Button fx:id="button_signup" alignment="CENTER" contentDisplay="CENTER" layoutX="37.0" layoutY="251.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="122.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="Create &#10;account" textAlignment="CENTER">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
@@ -103,6 +99,7 @@
                   <Font name="Inter Regular" size="15.0" />
                </font>
             </RadioButton>
+            <PasswordField fx:id="tf_password" layoutX="363.0" layoutY="271.0" prefHeight="31.0" prefWidth="202.0" />
 
          </children></AnchorPane>
       

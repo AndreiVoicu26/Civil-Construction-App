@@ -65,11 +65,6 @@
                   <Font name="Arial Rounded MT Bold" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="tf_password" layoutX="153.0" layoutY="243.0" prefHeight="30.0" prefWidth="200.0" promptText="Enter Password">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="15.0" />
-               </font>
-            </TextField>
             <Button fx:id="button_login" layoutX="194.0" layoutY="290.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="LOG IN" textFill="#1f1f20">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
@@ -85,6 +80,11 @@
                   <Font name="Arial Rounded MT Bold" size="15.0" />
                </font>
             </Button>
+            <PasswordField fx:id="tf_password" layoutX="153.0" layoutY="243.0" prefHeight="30.0" prefWidth="200.0" promptText="Enter Password">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="15.0" />
+               </font>
+            </PasswordField>
          </children></AnchorPane>
    </children>
 </HBox>
