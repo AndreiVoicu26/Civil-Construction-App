@@ -1,5 +1,6 @@
-package cca;
+package cca.controllers;
 
+import cca.DBUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

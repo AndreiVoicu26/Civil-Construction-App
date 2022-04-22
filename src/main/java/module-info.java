@@ -13,4 +13,6 @@ module sample.civilconstructionapp {
 
     opens cca to javafx.fxml;
     exports cca;
+    exports cca.controllers;
+    opens cca.controllers to javafx.fxml;
 }
