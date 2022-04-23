@@ -54,27 +54,39 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
-            psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
-            psCheckUserExists.setString(1, username);
-            resultSet = psCheckUserExists.executeQuery();
-
-            if (resultSet.isBeforeFirst()) {
+            if(password.length() < 6) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Username already taken!");
+                alert.setContentText("Password must have minimum 6 characters");
                 alert.show();
             } else {
-                psInsert = connection.prepareStatement("INSERT INTO users (username, password, fullname, email, phone, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                psInsert.setString(1, username);
-                psInsert.setString(2, toHexString(getSHA(password)));
-                psInsert.setString(3, fullName);
-                psInsert.setString(4, email);
-                psInsert.setString(5, phone);
-                psInsert.setString(6, address);
-                psInsert.setString(7, role);
-                psInsert.executeUpdate();
+                if (!username.matches("[a-zA-Z0-9]")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Username must be alphanumeric!");
+                    alert.show();
+                } else {
+                    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
+                    psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+                    psCheckUserExists.setString(1, username);
+                    resultSet = psCheckUserExists.executeQuery();
 
-                changeScene(event, "home.fxml", "Home",  username, role);
+                    if (resultSet.isBeforeFirst()) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Username already taken!");
+                        alert.show();
+                    } else {
+                        psInsert = connection.prepareStatement("INSERT INTO users (username, password, fullname, email, phone, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                        psInsert.setString(1, username);
+                        psInsert.setString(2, toHexString(getSHA(password)));
+                        psInsert.setString(3, fullName);
+                        psInsert.setString(4, email);
+                        psInsert.setString(5, phone);
+                        psInsert.setString(6, address);
+                        psInsert.setString(7, role);
+                        psInsert.executeUpdate();
+
+                        changeScene(event, "home.fxml", "Home", username, role);
+                    }
+                }
             }
         } catch (SQLException | NoSuchAlgorithmException e) {
             e.printStackTrace();
