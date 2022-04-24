@@ -4,21 +4,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFACD;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cca.controllers.HomeContractantController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFACD;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cca.controllers.AnnouncementController">
    <top>
-      <AnchorPane prefHeight="59.0" prefWidth="600.0" style="-fx-background-color: #FF7F50;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #FF7F50;" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="14.0" layoutY="12.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="90.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="BACK">
+            <Button fx:id="button_back" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="90.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="BACK">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
                </font>
             </Button>
-            <Label layoutX="191.0" layoutY="15.0" text="Announcement Info">
+            <Label layoutX="182.0" layoutY="14.0" text="Announcement Info">
                <font>
                   <Font name="Arial Rounded MT Bold" size="25.0" />
                </font>
             </Label>
-            <Button layoutX="462.0" layoutY="12.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="123.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="PUBLISH">
+            <Button fx:id="button_publish" layoutX="462.0" layoutY="12.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="123.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="PUBLISH">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
                </font>

@@ -1,5 +1,6 @@
 package cca;
 
+import cca.controllers.Controller;
 import cca.controllers.HomeContractantController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -26,8 +27,9 @@ public class DBUtils {
             try {
                 FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
                 root = loader.load();
-                HomeContractantController homeController = loader.getController();
+                Controller homeController = loader.getController();
                 homeController.setUserInformation(username, role);
+                homeController.saveUserInformation(username, role);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -56,7 +58,7 @@ public class DBUtils {
                 alert.setContentText("Password must have minimum 6 characters");
                 alert.show();
             } else {
-                if (!username.matches("[a-zA-Z0-9]")) {
+                if (!username.matches("[a-zA-Z0-9]+")) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Username must be alphanumeric!");
                     alert.show();

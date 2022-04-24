@@ -11,16 +11,14 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomeContractantController extends Controller implements Initializable {
+public class AnnouncementController extends Controller implements Initializable {
 
     @FXML
+    private Button button_back;
+    @FXML
+    private Button button_publish;
+    @FXML
     private Button button_logout;
-    @FXML
-    private Button button_announcement;
-    @FXML
-    private Button button_adslist;
-    @FXML
-    private Button button_clientslist;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -32,24 +30,17 @@ public class HomeContractantController extends Controller implements Initializab
             }
         });
 
-        button_announcement.setOnAction(new EventHandler<ActionEvent>() {
+        button_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "announcement.fxml", "Add announcement", username, role);
+                DBUtils.changeScene(event, "home-contractant.fxml", "Home", username, role);
             }
         });
 
-        button_adslist.setOnAction(new EventHandler<ActionEvent>() {
+        button_publish.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "ads-list.fxml", "Announcements List", username, role);
-            }
-        });
-
-        button_clientslist.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "clients-list.fxml", "Customers List", username, role);
             }
         });
 
