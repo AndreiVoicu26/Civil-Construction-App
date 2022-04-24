@@ -11,13 +11,12 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomeController implements Initializable {
+public class HomeContractantController implements Initializable {
 
     @FXML
     private Button button_logout;
-
-    //@FXML
-    //private Label label_welcome;
+    @FXML
+    private Button button_announcement;
 
     @FXML
     private Label label_username;
@@ -29,6 +28,14 @@ public class HomeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "log-in.fxml", "Log In", null, null);
+
+            }
+        });
+
+        button_announcement.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "announcement.fxml", "Log In", null, null);
 
             }
         });

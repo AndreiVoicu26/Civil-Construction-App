@@ -1,6 +1,6 @@
 package cca;
 
-import cca.controllers.HomeController;
+import cca.controllers.HomeContractantController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,9 +16,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class DBUtils {
 
@@ -29,7 +26,7 @@ public class DBUtils {
             try {
                 FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
                 root = loader.load();
-                HomeController homeController = loader.getController();
+                HomeContractantController homeController = loader.getController();
                 homeController.setUserInformation(username, role);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -84,7 +81,9 @@ public class DBUtils {
                         psInsert.setString(7, role);
                         psInsert.executeUpdate();
 
-                        changeScene(event, "home-contractant.fxml", "Home", username, role);
+                        if(role.equals("Contractant")) {
+                            changeScene(event, "home-contractant.fxml", "Home", username, role);
+                        }
                     }
                 }
             }
@@ -141,7 +140,9 @@ public class DBUtils {
                     String retrievedPassword = resultSet.getString("password");
                     String retrievedRole = resultSet.getString("role");
                     if(retrievedPassword.equals(toHexString(getSHA(password)))) {
-                        changeScene(event, "home-contractant.fxml", "Home", username, retrievedRole);
+                        if(retrievedRole.equals("Contractant")) {
+                            changeScene(event, "home-contractant.fxml", "Home", username, retrievedRole);
+                        }
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setContentText("Provided credentials are incorrect!");

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFACD;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cca.controllers.HomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFACD;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cca.controllers.HomeContractantController">
     <top>
         <AnchorPane prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #FF7F50;" BorderPane.alignment="CENTER">
             <children>
@@ -35,12 +35,17 @@
    <center>
       <AnchorPane prefHeight="270.0" prefWidth="508.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="91.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="210.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="ADD &#10;ANNOUNCEMENT" textAlignment="CENTER">
+            <Button fx:id="button_announcement" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="220.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="ADD &#10;ANNOUNCEMENT" textAlignment="CENTER">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="375.0" layoutY="91.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="210.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="VIEW &#10;CUSTOMERS" textAlignment="CENTER">
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="190.0" layoutY="165.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="220.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="VIEW &#10;CUSTOMERS" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="366.0" layoutY="44.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="220.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="VIEW&#10;ANNOUNCEMENTS" textAlignment="CENTER">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
                </font>
