@@ -84,7 +84,7 @@ public class DBUtils {
                         psInsert.setString(7, role);
                         psInsert.executeUpdate();
 
-                        changeScene(event, "home.fxml", "Home", username, role);
+                        changeScene(event, "home-contractant.fxml", "Home", username, role);
                     }
                 }
             }
@@ -141,7 +141,7 @@ public class DBUtils {
                     String retrievedPassword = resultSet.getString("password");
                     String retrievedRole = resultSet.getString("role");
                     if(retrievedPassword.equals(toHexString(getSHA(password)))) {
-                        changeScene(event, "home.fxml", "Home", username, retrievedRole);
+                        changeScene(event, "home-contractant.fxml", "Home", username, retrievedRole);
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setContentText("Provided credentials are incorrect!");
