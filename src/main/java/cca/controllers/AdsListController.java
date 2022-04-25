@@ -1,10 +1,12 @@
 package cca.controllers;
 
+import cca.Announcement;
 import cca.DBUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 import java.net.URL;
@@ -16,6 +18,8 @@ public class AdsListController extends Controller implements Initializable {
     private Button button_back;
     @FXML
     private Button button_logout;
+
+    private Announcement advert;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -31,8 +35,13 @@ public class AdsListController extends Controller implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "home-contractant.fxml", "Home", username, role);
+                //getAnnouncement(advert);
             }
         });
 
+    }
+
+    public void getAnnouncement(Announcement ad) {
+        advert = ad;
     }
 }

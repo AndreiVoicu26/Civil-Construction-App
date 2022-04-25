@@ -1,5 +1,7 @@
 package cca;
 
+import cca.controllers.AdsListController;
+import cca.controllers.AnnouncementController;
 import cca.controllers.Controller;
 import cca.controllers.HomeContractantController;
 import javafx.event.ActionEvent;
@@ -177,6 +179,61 @@ public class DBUtils {
                 }
             }
         }
+    }
+
+    public static void addAnnouncement(ActionEvent event, String username, String role, Announcement ad) {
+        Connection connection = null;
+        PreparedStatement psInsert = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
+            psInsert = connection.prepareStatement("INSERT INTO announcements (username, title, service, description, location, payment) VALUES(?,?,?,?,?,?)");
+            psInsert.setString(1, username);
+            psInsert.setString(2,ad.getTitle());
+            psInsert.setString(3,ad.getService());
+            psInsert.setString(4,ad.getDescription());
+            psInsert.setString(5,ad.getLocation());
+            psInsert.setString(6,ad.getPayment());
+            psInsert.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (psInsert != null) {
+                try {
+                    psInsert.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource("ads-list.fxml"));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdsListController listController = loader.getController();
+            listController.getAnnouncement(ad);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Announcements List");
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
     }
 
     public static byte[] getSHA(String input) throws NoSuchAlgorithmException
