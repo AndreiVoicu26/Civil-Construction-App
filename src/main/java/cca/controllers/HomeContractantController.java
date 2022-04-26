@@ -43,7 +43,7 @@ public class HomeContractantController extends Controller implements Initializab
         button_adslist.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.takeAnnouncements(event, username, role);
+                DBUtils.takeAnnouncements(event,"ads-list.fxml","Announcements List", username, role);
             }
         });
 

@@ -4,20 +4,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFACD;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cca.controllers.AdsListController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFACD;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cca.controllers.AdDetailsController">
     <top>
         <AnchorPane prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #FF7F50;" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" layoutX="139.0" layoutY="15.0" prefHeight="36.0" prefWidth="321.0" text="Your announcements">
+                <Label alignment="CENTER" layoutX="139.0" layoutY="15.0" prefHeight="36.0" prefWidth="321.0" text="Announcement Info">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="25.0" />
                     </font>
                 </Label>
-            <Button fx:id="button_back" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="BACK">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="20.0" />
-               </font>
-            </Button>
+                <Button fx:id="button_back" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="BACK">
+                    <font>
+                        <Font name="Arial Rounded MT Bold" size="20.0" />
+                    </font>
+                </Button>
             </children>
         </AnchorPane>
     </top>
@@ -38,9 +38,9 @@
         </AnchorPane>
     </bottom>
     <center>
-        <AnchorPane prefHeight="270.0" prefWidth="508.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="141.0" prefWidth="600.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
          <children>
-            <ListView fx:id="announcementListView" layoutY="-1.0" prefHeight="285.0" prefWidth="600.0" style="-fx-background-color: #FFE4B5;" />
+            <Label fx:id="label_announcement" prefHeight="236.0" prefWidth="600.0" />
          </children></AnchorPane>
     </center>
 </BorderPane>

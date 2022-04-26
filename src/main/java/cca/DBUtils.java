@@ -1,15 +1,14 @@
 package cca;
 
-import cca.controllers.AdsListController;
-import cca.controllers.AnnouncementController;
-import cca.controllers.Controller;
-import cca.controllers.HomeContractantController;
+import cca.controllers.*;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -42,6 +41,26 @@ public class DBUtils {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
+    public static void changeScene2(MouseEvent event, String fxmlFile, String title, String username, String role, Announcement ad) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdDetailsController adController = loader.getController();
+            adController.displayAnnouncement(ad);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
@@ -235,7 +254,7 @@ public class DBUtils {
         stage.show();
     }
 
-    public static void takeAnnouncements(ActionEvent event, String username, String role) {
+    public static void takeAnnouncements(ActionEvent event, String fxmlFile, String title, String username, String role) {
         ArrayList<Announcement> announcementArrayList = new ArrayList<Announcement>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -291,7 +310,7 @@ public class DBUtils {
         Parent root = null;
 
         try {
-            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource("ads-list.fxml"));
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
             root = loader.load();
             Controller homeController = loader.getController();
             homeController.setUserInformation(username, role);
@@ -303,7 +322,7 @@ public class DBUtils {
         }
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Announcements List");
+        stage.setTitle(title);
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }

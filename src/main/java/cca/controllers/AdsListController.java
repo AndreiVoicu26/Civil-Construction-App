@@ -8,8 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -49,5 +52,22 @@ public class AdsListController extends Controller implements Initializable {
         announcementObservableList.removeAll();
         announcementObservableList.addAll(adsList);
         announcementListView.getItems().addAll(announcementObservableList);
+        announcementListView.setCellFactory(announcementListView1 -> new ListCell<Announcement>() {
+            public void updateItem(Announcement ad, boolean empty) {
+                super.updateItem(ad, empty);
+                if(empty) {
+                    setText(null);
+                } else {
+                    setText(ad.getTitle() + "\nService: " + ad.getService());
+                }
+            }
+        });
+        announcementListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Announcement ad = announcementListView.getSelectionModel().getSelectedItem();
+                DBUtils.changeScene2(event, "ad-details.fxml","Announcement Information",username, role, ad);
+            }
+        });
     }
 }
