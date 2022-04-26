@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AnnouncementController extends Controller implements Initializable {
@@ -84,7 +85,27 @@ public class AnnouncementController extends Controller implements Initializable 
                     ad = new Announcement(tf_title.getText(), choice_service.getValue(), tf_description.getText(), tf_location.getText(), tf_payment.getText());
                 }
 
-                DBUtils.addAnnouncement(event, username, role, ad);
+                if(!tf_title.getText().trim().isEmpty() && !choice_service.getValue().trim().isEmpty() && (!choice_service.getValue().equals("Other option") || (choice_service.getValue().equals("Other option") && !tf_service.getText().trim().isEmpty()))
+                        && !tf_description.getText().trim().isEmpty() && !tf_location.getText().trim().isEmpty() && !tf_payment.getText().trim().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setHeaderText("Confirm publication");
+                    alert.setContentText("Are you sure you want to publish it?");
+                    alert.showAndWait();
+                    if(alert.getResult() == ButtonType.OK) {
+                        DBUtils.addAnnouncement(event, username, role, ad);
+
+                        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                        alert2.setHeaderText("Congratulations!");
+                        alert2.setContentText("Your announcement was published");
+                        alert2.show();
+                    } else {
+                        alert.close();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("All fields are required!");
+                    alert.show();
+                }
             }
         });
 

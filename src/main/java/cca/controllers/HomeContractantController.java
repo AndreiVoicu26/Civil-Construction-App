@@ -1,5 +1,6 @@
 package cca.controllers;
 
+import cca.Announcement;
 import cca.DBUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -42,7 +43,7 @@ public class HomeContractantController extends Controller implements Initializab
         button_adslist.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "ads-list.fxml", "Announcements List", username, role);
+                DBUtils.takeAnnouncements(event, username, role);
             }
         });
 

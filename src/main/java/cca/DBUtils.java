@@ -19,6 +19,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 public class DBUtils {
 
@@ -219,13 +220,84 @@ public class DBUtils {
         Parent root = null;
 
         try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource("home-contractant.fxml"));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Home");
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
+    public static void takeAnnouncements(ActionEvent event, String username, String role) {
+        ArrayList<Announcement> announcementArrayList = new ArrayList<Announcement>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
+            preparedStatement = connection.prepareStatement("SELECT * FROM announcements WHERE username = ?");
+            preparedStatement.setString(1,username);
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(username + " has no announcements published!");
+                alert.show();
+            } else {
+                while(resultSet.next()) {
+                    String retrievedTitle = resultSet.getString("title");
+                    String retrievedService = resultSet.getString("service");
+                    String retrievedDescription = resultSet.getString("description");
+                    String retrievedLocation = resultSet.getString("location");
+                    String retrievedPayment = resultSet.getString("payment");
+                    announcementArrayList.add(new Announcement(retrievedTitle, retrievedService, retrievedDescription, retrievedLocation, retrievedPayment));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        Parent root = null;
+
+        try {
             FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource("ads-list.fxml"));
             root = loader.load();
             Controller homeController = loader.getController();
             homeController.setUserInformation(username, role);
             homeController.saveUserInformation(username, role);
             AdsListController listController = loader.getController();
-            listController.getAnnouncement(ad);
+            listController.loadData(announcementArrayList);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -236,8 +308,7 @@ public class DBUtils {
         stage.show();
     }
 
-    public static byte[] getSHA(String input) throws NoSuchAlgorithmException
-    {
+    public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
         /* MessageDigest instance for hashing using SHA512*/
         MessageDigest md = MessageDigest.getInstance("SHA-512");
 
@@ -245,8 +316,7 @@ public class DBUtils {
         return md.digest(input.getBytes(StandardCharsets.UTF_8));
     }
 
-    public static String toHexString(byte[] hash)
-    {
+    public static String toHexString(byte[] hash) {
         /* Convert byte array of hash into digest */
         BigInteger number = new BigInteger(1, hash);
 
