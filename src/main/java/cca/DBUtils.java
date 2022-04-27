@@ -312,28 +312,22 @@ public class DBUtils {
         DBUtils.takeAnnouncements(event,"ads-list.fxml","Announcements List", username, role);
     }
 
-   /* public static void updateAnnouncement(ActionEvent event, String username, String role, Announcement ad) {
+    public static void deleteAnnouncement(ActionEvent event, String username, String role, Announcement ad) {
         Connection connection = null;
-        PreparedStatement psUpdate = null;
+        PreparedStatement psDelete = null;
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
-            psUpdate = connection.prepareStatement("UPDATE announcements SET username = ?, title = ?, service = ?, description = ?, location = ?, payment = ? WHERE announcement_id = ?");
-            psUpdate.setString(1, username);
-            psUpdate.setString(2,ad.getTitle());
-            psUpdate.setString(3,ad.getService());
-            psUpdate.setString(4,ad.getDescription());
-            psUpdate.setString(5,ad.getLocation());
-            psUpdate.setString(6,ad.getPayment());
-            psUpdate.setInt(7,ad.getID());
-            psUpdate.executeUpdate();
+            psDelete = connection.prepareStatement("DELETE FROM announcements WHERE announcement_id = ?");
+            psDelete.setInt(1,ad.getID());
+            psDelete.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (psUpdate != null) {
+            if (psDelete != null) {
                 try {
-                    psUpdate.close();
+                    psDelete.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -348,7 +342,7 @@ public class DBUtils {
         }
 
         DBUtils.takeAnnouncements(event,"ads-list.fxml","Announcements List", username, role);
-    }*/
+    }
 
     public static void takeAnnouncements(ActionEvent event, String fxmlFile, String title, String username, String role) {
         ArrayList<Announcement> announcementArrayList = new ArrayList<Announcement>();

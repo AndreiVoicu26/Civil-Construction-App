@@ -32,7 +32,14 @@ public class AdDetailsController extends Controller implements Initializable {
         button_logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "log-in.fxml", "Log In", null, null);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText("Are you sure you want to log out?");
+                alert.showAndWait();
+                if(alert.getResult() == ButtonType.OK) {
+                    DBUtils.changeScene(event, "log-in.fxml", "Log In", null, null);
+                } else {
+                    alert.close();
+                }
             }
         });
 
@@ -50,12 +57,23 @@ public class AdDetailsController extends Controller implements Initializable {
             }
         });
 
-        /*button_delete.setOnAction(new EventHandler<ActionEvent>() {
+        button_delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.deleteAnnouncement(event, "edit-ad.fxml","Edit Announcement", username, role, ad);
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Are you sure you want to delete it?");
+                alert.showAndWait();
+                if(alert.getResult() == ButtonType.OK) {
+                    DBUtils.deleteAnnouncement(event, username, role, ad);
+
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setHeaderText("Your announcement was deleted.");
+                    alert2.show();
+                } else {
+                    alert.close();
+                }
             }
-        });*/
+        });
 
 
     }

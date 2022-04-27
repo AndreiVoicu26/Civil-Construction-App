@@ -49,7 +49,14 @@ public class AnnouncementController extends Controller implements Initializable 
         button_logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "log-in.fxml", "Log In", null, null);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText("Are you sure you want to log out?");
+                alert.showAndWait();
+                if(alert.getResult() == ButtonType.OK) {
+                    DBUtils.changeScene(event, "log-in.fxml", "Log In", null, null);
+                } else {
+                    alert.close();
+                }
             }
         });
 
@@ -88,15 +95,13 @@ public class AnnouncementController extends Controller implements Initializable 
                 if(!tf_title.getText().trim().isEmpty() && !choice_service.getValue().trim().isEmpty() && (!choice_service.getValue().equals("Other option") || (choice_service.getValue().equals("Other option") && !tf_service.getText().trim().isEmpty()))
                         && !tf_description.getText().trim().isEmpty() && !tf_location.getText().trim().isEmpty() && !tf_payment.getText().trim().isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setHeaderText("Confirm publication");
-                    alert.setContentText("Are you sure you want to publish it?");
+                    alert.setHeaderText("Are you sure you want to publish it?");
                     alert.showAndWait();
                     if(alert.getResult() == ButtonType.OK) {
                         DBUtils.addAnnouncement(event, username, role, ad);
 
                         Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                        alert2.setHeaderText("Congratulations!");
-                        alert2.setContentText("Your announcement was published");
+                        alert2.setHeaderText("Congratulations!Your announcement was published.");
                         alert2.show();
                     } else {
                         alert.close();
