@@ -48,7 +48,7 @@ public class DBUtils {
         stage.show();
     }
 
-    public static void changeScene2(MouseEvent event, String fxmlFile, String title, String username, String role, Announcement ad) {
+    public static void changeScene2(Event event, String fxmlFile, String title, String username, String role, Announcement ad) {
         Parent root = null;
 
         try {
@@ -59,6 +59,26 @@ public class DBUtils {
             homeController.saveUserInformation(username, role);
             AdDetailsController adController = loader.getController();
             adController.displayAnnouncement(ad);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
+    public static void changeScene3(ActionEvent event, String fxmlFile, String title, String username, String role, Announcement ad) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdEditController adController = loader.getController();
+            adController.getAnnouncement(ad);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -254,6 +274,82 @@ public class DBUtils {
         stage.show();
     }
 
+    public static void updateAnnouncement(ActionEvent event, String username, String role, Announcement ad) {
+        Connection connection = null;
+        PreparedStatement psUpdate = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
+            psUpdate = connection.prepareStatement("UPDATE announcements SET username = ?, title = ?, service = ?, description = ?, location = ?, payment = ? WHERE announcement_id = ?");
+            psUpdate.setString(1, username);
+            psUpdate.setString(2,ad.getTitle());
+            psUpdate.setString(3,ad.getService());
+            psUpdate.setString(4,ad.getDescription());
+            psUpdate.setString(5,ad.getLocation());
+            psUpdate.setString(6,ad.getPayment());
+            psUpdate.setInt(7,ad.getID());
+            psUpdate.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (psUpdate != null) {
+                try {
+                    psUpdate.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        DBUtils.takeAnnouncements(event,"ads-list.fxml","Announcements List", username, role);
+    }
+
+   /* public static void updateAnnouncement(ActionEvent event, String username, String role, Announcement ad) {
+        Connection connection = null;
+        PreparedStatement psUpdate = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
+            psUpdate = connection.prepareStatement("UPDATE announcements SET username = ?, title = ?, service = ?, description = ?, location = ?, payment = ? WHERE announcement_id = ?");
+            psUpdate.setString(1, username);
+            psUpdate.setString(2,ad.getTitle());
+            psUpdate.setString(3,ad.getService());
+            psUpdate.setString(4,ad.getDescription());
+            psUpdate.setString(5,ad.getLocation());
+            psUpdate.setString(6,ad.getPayment());
+            psUpdate.setInt(7,ad.getID());
+            psUpdate.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (psUpdate != null) {
+                try {
+                    psUpdate.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        DBUtils.takeAnnouncements(event,"ads-list.fxml","Announcements List", username, role);
+    }*/
+
     public static void takeAnnouncements(ActionEvent event, String fxmlFile, String title, String username, String role) {
         ArrayList<Announcement> announcementArrayList = new ArrayList<Announcement>();
         Connection connection = null;
@@ -277,7 +373,8 @@ public class DBUtils {
                     String retrievedDescription = resultSet.getString("description");
                     String retrievedLocation = resultSet.getString("location");
                     String retrievedPayment = resultSet.getString("payment");
-                    announcementArrayList.add(new Announcement(retrievedTitle, retrievedService, retrievedDescription, retrievedLocation, retrievedPayment));
+                    int retrievedID = resultSet.getInt("announcement_id");
+                    announcementArrayList.add(new Announcement(retrievedTitle, retrievedService, retrievedDescription, retrievedLocation, retrievedPayment, retrievedID));
                 }
             }
         } catch (SQLException e) {

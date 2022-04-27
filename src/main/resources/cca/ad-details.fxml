@@ -18,6 +18,8 @@
                         <Font name="Arial Rounded MT Bold" size="20.0" />
                     </font>
                 </Button>
+            <Button fx:id="button_edit" layoutX="474.0" layoutY="16.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="60.0" text="Edit" />
+            <Button fx:id="button_delete" layoutX="534.0" layoutY="16.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="60.0" text="Delete" />
             </children>
         </AnchorPane>
     </top>
@@ -40,7 +42,10 @@
     <center>
         <AnchorPane prefHeight="141.0" prefWidth="600.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="label_announcement" prefHeight="236.0" prefWidth="600.0" />
+            <Label fx:id="label_announcement" alignment="TOP_LEFT" contentDisplay="TOP" layoutY="1.0" lineSpacing="0.5" prefHeight="289.0" prefWidth="600.0" style="-fx-background-color: #F0E68C; -fx-border-color: #FFD700;">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font></Label>
          </children></AnchorPane>
     </center>
 </BorderPane>

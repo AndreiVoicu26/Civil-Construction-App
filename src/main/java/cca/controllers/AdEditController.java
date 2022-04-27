@@ -9,15 +9,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AnnouncementController extends Controller implements Initializable {
+public class AdEditController extends Controller implements Initializable {
 
     @FXML
     private Button button_back;
     @FXML
-    private Button button_publish;
+    private Button button_save;
     @FXML
     private Button button_logout;
 
@@ -38,7 +37,7 @@ public class AnnouncementController extends Controller implements Initializable 
     @FXML
     private Label label_custom;
 
-    Announcement ad;
+    private Announcement ad;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -56,47 +55,31 @@ public class AnnouncementController extends Controller implements Initializable 
         button_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "home-contractant.fxml", "Home", username, role);
+                DBUtils.changeScene2(event, "ad-details.fxml","Announcement Information",username, role, ad);
             }
         });
 
-        choice_service.getItems().addAll("Service 1", "Service 2", "Service 3", "Other option");
-
-        choice_service.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                if (choice_service.getValue().equals("Other option")) {
-                    label_custom.setVisible(true);
-                    tf_service.setVisible(true);
-                } else {
-                    label_custom.setVisible(false);
-                    tf_service.setVisible(false);
-                }
-            }
-        });
-
-        button_publish.setOnAction(new EventHandler<ActionEvent>() {
+        button_save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
                 if (choice_service.getValue().equals("Other option")) {
-                    ad = new Announcement(tf_title.getText(), tf_service.getText(), tf_description.getText(), tf_location.getText(), tf_payment.getText(), 0);
+                    ad = new Announcement(tf_title.getText(), tf_service.getText(), tf_description.getText(), tf_location.getText(), tf_payment.getText(), ad.getID());
                 } else {
-                    ad = new Announcement(tf_title.getText(), choice_service.getValue(), tf_description.getText(), tf_location.getText(), tf_payment.getText(), 0);
+                    ad = new Announcement(tf_title.getText(), choice_service.getValue(), tf_description.getText(), tf_location.getText(), tf_payment.getText(), ad.getID());
                 }
 
                 if(!tf_title.getText().trim().isEmpty() && !choice_service.getValue().trim().isEmpty() && (!choice_service.getValue().equals("Other option") || (choice_service.getValue().equals("Other option") && !tf_service.getText().trim().isEmpty()))
                         && !tf_description.getText().trim().isEmpty() && !tf_location.getText().trim().isEmpty() && !tf_payment.getText().trim().isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setHeaderText("Confirm publication");
-                    alert.setContentText("Are you sure you want to publish it?");
+                    alert.setHeaderText("Confirm saving");
+                    alert.setContentText("Are you sure you want to save it?");
                     alert.showAndWait();
                     if(alert.getResult() == ButtonType.OK) {
-                        DBUtils.addAnnouncement(event, username, role, ad);
+                        DBUtils.updateAnnouncement(event, username, role, ad);
 
                         Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
                         alert2.setHeaderText("Congratulations!");
-                        alert2.setContentText("Your announcement was published");
+                        alert2.setContentText("Your announcement was updated");
                         alert2.show();
                     } else {
                         alert.close();
@@ -106,9 +89,33 @@ public class AnnouncementController extends Controller implements Initializable 
                     alert.setContentText("All fields are required!");
                     alert.show();
                 }
+
             }
         });
 
     }
 
+
+
+    public void getAnnouncement(Announcement announcement) {
+        ad = announcement;
+        choice_service.getItems().addAll("Service 1", "Service 2", "Service 3", "Other option");
+        int ok = 0;
+        tf_title.setText(ad.getTitle());
+        for(String current: choice_service.getItems()) {
+            if(ad.getService().equals(current)) {
+                choice_service.getSelectionModel().select(current);
+                ok = 1;
+            }
+        }
+        if(ok == 0) {
+            choice_service.getSelectionModel().select("Other option");
+            label_custom.setVisible(true);
+            tf_service.setVisible(true);
+            tf_service.setText(ad.getService());
+        }
+        tf_description.setText(ad.getDescription());
+        tf_location.setText(ad.getLocation());
+        tf_payment.setText(ad.getPayment());
+    }
 }

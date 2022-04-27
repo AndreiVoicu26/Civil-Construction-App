@@ -6,13 +6,15 @@ public class Announcement {
     private String Description;
     private String Location;
     private String Payment;
+    private int ID;
 
-    public Announcement(String title, String service, String description, String location, String payment) {
+    public Announcement(String title, String service, String description, String location, String payment, int id) {
         Title = title;
         Service = service;
         Description = description;
         Location = location;
         Payment = payment;
+        ID = id;
     }
 
     public String getTitle() {
@@ -33,6 +35,10 @@ public class Announcement {
 
     public String getPayment() {
         return Payment;
+    }
+
+    public int getID() {
+        return ID;
     }
 
     public String toString() {
