@@ -88,6 +88,170 @@ public class DBUtils {
         stage.show();
     }
 
+    public static void changeScene4(ActionEvent event, String fxmlFile, String title, String username, String role, Announcement ad, String fxmlSource) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdPromoteController promoteController = loader.getController();
+            promoteController.getAnnouncement(ad, fxmlSource);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
+    public static void changeScene5(ActionEvent event, String fxmlFile, String title, String username, String role, Announcement ad) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AnnouncementController promoteController = loader.getController();
+            promoteController.getAnnouncement(ad);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
+    public static void changeScene6(ActionEvent event, String fxmlFile, String title, String username, String role, Announcement ad) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdEditController promoteController = loader.getController();
+            promoteController.getAnnouncement(ad);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
+    public static void addCard(ActionEvent event, String fxmlFile, String title, String username, String role, Card card, Announcement ad) {
+        Connection connection = null;
+        PreparedStatement psInsert = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            psInsert = connection.prepareStatement("UPDATE users SET cardnumber = ?, expdate = ?, cvc = ? WHERE username = ? ");
+            psInsert.setString(1,toHexString(getSHA(card.getCardNumber())));
+            psInsert.setString(2,toHexString(getSHA(card.getExpirationDate())));
+            psInsert.setString(3,toHexString(getSHA(card.getCVC())));
+            psInsert.setString(4,username);
+            psInsert.executeUpdate();
+        } catch (SQLException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } finally {
+            if (psInsert != null) {
+                try {
+                    psInsert.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AnnouncementController promoteController = loader.getController();
+            promoteController.getPromotion();
+            promoteController.getAnnouncement(ad);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
+    public static void addCard2(ActionEvent event, String fxmlFile, String title, String username, String role, Card card, Announcement ad) {
+        Connection connection = null;
+        PreparedStatement psInsert = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            psInsert = connection.prepareStatement("UPDATE users SET cardnumber = ?, expdate = ?, cvc = ? WHERE username = ? ");
+            psInsert.setString(1,toHexString(getSHA(card.getCardNumber())));
+            psInsert.setString(2,toHexString(getSHA(card.getExpirationDate())));
+            psInsert.setString(3,toHexString(getSHA(card.getCVC())));
+            psInsert.setString(4,username);
+            psInsert.executeUpdate();
+        } catch (SQLException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } finally {
+            if (psInsert != null) {
+                try {
+                    psInsert.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdEditController promoteController = loader.getController();
+            promoteController.getPromotion();
+            promoteController.getAnnouncement(ad);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
     public static void signUpUser(ActionEvent event, String username, String password, String role, String fullName, String email, String phone, String address) {
         Connection connection = null;
         PreparedStatement psInsert = null;
@@ -105,7 +269,7 @@ public class DBUtils {
                     alert.setContentText("Username must be alphanumeric!");
                     alert.show();
                 } else {
-                    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
+                    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
                     psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
                     psCheckUserExists.setString(1, username);
                     resultSet = psCheckUserExists.executeQuery();
@@ -170,7 +334,7 @@ public class DBUtils {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
             preparedStatement = connection.prepareStatement("SELECT password, role FROM users WHERE username = ?");
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
@@ -226,14 +390,15 @@ public class DBUtils {
         PreparedStatement psInsert = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
-            psInsert = connection.prepareStatement("INSERT INTO announcements (username, title, service, description, location, payment) VALUES(?,?,?,?,?,?)");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            psInsert = connection.prepareStatement("INSERT INTO announcements (username, title, service, description, location, payment, promoted) VALUES(?,?,?,?,?,?,?)");
             psInsert.setString(1, username);
             psInsert.setString(2,ad.getTitle());
             psInsert.setString(3,ad.getService());
             psInsert.setString(4,ad.getDescription());
             psInsert.setString(5,ad.getLocation());
             psInsert.setString(6,ad.getPayment());
+            psInsert.setInt(7, ad.getPromoted());
             psInsert.executeUpdate();
 
         } catch (SQLException e) {
@@ -279,15 +444,16 @@ public class DBUtils {
         PreparedStatement psUpdate = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
-            psUpdate = connection.prepareStatement("UPDATE announcements SET username = ?, title = ?, service = ?, description = ?, location = ?, payment = ? WHERE announcement_id = ?");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            psUpdate = connection.prepareStatement("UPDATE announcements SET username = ?, title = ?, service = ?, description = ?, location = ?, payment = ?, promoted = ? WHERE announcement_id = ?");
             psUpdate.setString(1, username);
             psUpdate.setString(2,ad.getTitle());
             psUpdate.setString(3,ad.getService());
             psUpdate.setString(4,ad.getDescription());
             psUpdate.setString(5,ad.getLocation());
             psUpdate.setString(6,ad.getPayment());
-            psUpdate.setInt(7,ad.getID());
+            psUpdate.setInt(7, ad.getPromoted());
+            psUpdate.setInt(8,ad.getID());
             psUpdate.executeUpdate();
 
         } catch (SQLException e) {
@@ -315,16 +481,45 @@ public class DBUtils {
     public static void deleteAnnouncement(ActionEvent event, String username, String role, Announcement ad) {
         Connection connection = null;
         PreparedStatement psDelete = null;
+        PreparedStatement psCheckNoAnnouncements = null;
+        ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
             psDelete = connection.prepareStatement("DELETE FROM announcements WHERE announcement_id = ?");
             psDelete.setInt(1,ad.getID());
             psDelete.executeUpdate();
 
+            psCheckNoAnnouncements = connection.prepareStatement("SELECT * FROM announcements WHERE username = ?");
+            psCheckNoAnnouncements.setString(1, username);
+            resultSet = psCheckNoAnnouncements.executeQuery();
+
+            if(!resultSet.isBeforeFirst()) {
+                DBUtils.changeScene(event,"home-contractant.fxml","Home", username, role);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(username + " has no announcements published!");
+                alert.show();
+            } else {
+                DBUtils.takeAnnouncements(event,"ads-list.fxml","Announcements List", username, role);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (psCheckNoAnnouncements != null) {
+                try {
+                    psCheckNoAnnouncements.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             if (psDelete != null) {
                 try {
                     psDelete.close();
@@ -341,7 +536,6 @@ public class DBUtils {
             }
         }
 
-        DBUtils.takeAnnouncements(event,"ads-list.fxml","Announcements List", username, role);
     }
 
     public static void takeAnnouncements(ActionEvent event, String fxmlFile, String title, String username, String role) {
@@ -351,7 +545,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "an26022002vo");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
             preparedStatement = connection.prepareStatement("SELECT * FROM announcements WHERE username = ?");
             preparedStatement.setString(1,username);
             resultSet = preparedStatement.executeQuery();
@@ -360,6 +554,7 @@ public class DBUtils {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText(username + " has no announcements published!");
                 alert.show();
+                return;
             } else {
                 while(resultSet.next()) {
                     String retrievedTitle = resultSet.getString("title");
@@ -368,7 +563,8 @@ public class DBUtils {
                     String retrievedLocation = resultSet.getString("location");
                     String retrievedPayment = resultSet.getString("payment");
                     int retrievedID = resultSet.getInt("announcement_id");
-                    announcementArrayList.add(new Announcement(retrievedTitle, retrievedService, retrievedDescription, retrievedLocation, retrievedPayment, retrievedID));
+                    int retrievedPromoted = resultSet.getInt("promoted");
+                    announcementArrayList.add(new Announcement(retrievedTitle, retrievedService, retrievedDescription, retrievedLocation, retrievedPayment, retrievedID, retrievedPromoted));
                 }
             }
         } catch (SQLException e) {

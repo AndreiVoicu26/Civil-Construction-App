@@ -19,6 +19,8 @@ public class AdEditController extends Controller implements Initializable {
     private Button button_save;
     @FXML
     private Button button_logout;
+    @FXML
+    private Button button_promote;
 
     @FXML
     private TextField tf_title;
@@ -35,15 +37,33 @@ public class AdEditController extends Controller implements Initializable {
     private ChoiceBox<String> choice_service;
 
     @FXML
+    private CheckBox checkbox_promoted;
+
+    @FXML
     private Label label_custom;
 
     private Announcement ad;
+    private int promoted = 0;
+    private String fxmlSource = "edit-ad.fxml";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         label_custom.setVisible(false);
         tf_service.setVisible(false);
+
+        choice_service.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (choice_service.getValue().equals("Other option")) {
+                    label_custom.setVisible(true);
+                    tf_service.setVisible(true);
+                } else {
+                    label_custom.setVisible(false);
+                    tf_service.setVisible(false);
+                }
+            }
+        });
 
         button_logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -66,17 +86,31 @@ public class AdEditController extends Controller implements Initializable {
             }
         });
 
+        button_promote.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(!tf_title.getText().trim().isEmpty() && !tf_description.getText().trim().isEmpty() && !tf_location.getText().trim().isEmpty() && !tf_payment.getText().trim().isEmpty()
+                        && choice_service.getValue() != null && (!choice_service.getValue().equals("Other option") || (choice_service.getValue().equals("Other option") && !tf_service.getText().trim().isEmpty()))) {
+                    DBUtils.changeScene4(event, "promote-ad.fxml", "Promote Announcement", username, role, ad, fxmlSource);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("All fields are required!");
+                    alert.show();
+                }
+            }
+        });
+
         button_save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (choice_service.getValue().equals("Other option")) {
-                    ad = new Announcement(tf_title.getText(), tf_service.getText(), tf_description.getText(), tf_location.getText(), tf_payment.getText(), ad.getID());
-                } else {
-                    ad = new Announcement(tf_title.getText(), choice_service.getValue(), tf_description.getText(), tf_location.getText(), tf_payment.getText(), ad.getID());
-                }
 
-                if(!tf_title.getText().trim().isEmpty() && !choice_service.getValue().trim().isEmpty() && (!choice_service.getValue().equals("Other option") || (choice_service.getValue().equals("Other option") && !tf_service.getText().trim().isEmpty()))
-                        && !tf_description.getText().trim().isEmpty() && !tf_location.getText().trim().isEmpty() && !tf_payment.getText().trim().isEmpty()) {
+                if(!tf_title.getText().trim().isEmpty() && !tf_description.getText().trim().isEmpty() && !tf_location.getText().trim().isEmpty() && !tf_payment.getText().trim().isEmpty()
+                        && choice_service.getValue() != null && (!choice_service.getValue().equals("Other option") || (choice_service.getValue().equals("Other option") && !tf_service.getText().trim().isEmpty()))) {
+                    if (choice_service.getValue().equals("Other option")) {
+                        ad = new Announcement(tf_title.getText(), tf_service.getText(), tf_description.getText(), tf_location.getText(), tf_payment.getText(), ad.getID(), promoted);
+                    } else {
+                        ad = new Announcement(tf_title.getText(), choice_service.getValue(), tf_description.getText(), tf_location.getText(), tf_payment.getText(), ad.getID(), promoted);
+                    }
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setHeaderText("Are you sure you want to save it?");
                     alert.showAndWait();
@@ -84,7 +118,7 @@ public class AdEditController extends Controller implements Initializable {
                         DBUtils.updateAnnouncement(event, username, role, ad);
 
                         Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                        alert2.setHeaderText("Congratulations! Your announcement was updated.");
+                        alert2.setHeaderText("Congratulations!Your announcement was updated.");
                         alert2.show();
                     } else {
                         alert.close();
@@ -100,10 +134,13 @@ public class AdEditController extends Controller implements Initializable {
 
     }
 
+    public void getPromotion() {
+        promoted = 1;
+        checkbox_promoted.setSelected(true);
+    }
 
-
-    public void getAnnouncement(Announcement announcement) {
-        ad = announcement;
+    public void getAnnouncement(Announcement ad) {
+        this.ad = ad;
         choice_service.getItems().addAll("Service 1", "Service 2", "Service 3", "Other option");
         int ok = 0;
         tf_title.setText(ad.getTitle());

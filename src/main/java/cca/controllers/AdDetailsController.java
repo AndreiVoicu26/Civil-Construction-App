@@ -14,7 +14,15 @@ import java.util.ResourceBundle;
 public class AdDetailsController extends Controller implements Initializable {
 
     @FXML
-    private Label label_announcement;
+    private Label label_title;
+    @FXML
+    private Label label_service;
+    @FXML
+    private Label label_description;
+    @FXML
+    private Label label_location;
+    @FXML
+    private Label label_payment;
 
     @FXML
     private Button button_back;
@@ -60,7 +68,7 @@ public class AdDetailsController extends Controller implements Initializable {
         button_delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setHeaderText("Are you sure you want to delete it?");
                 alert.showAndWait();
                 if(alert.getResult() == ButtonType.OK) {
@@ -80,6 +88,10 @@ public class AdDetailsController extends Controller implements Initializable {
 
     public void displayAnnouncement(Announcement ad){
         this.ad = ad;
-        label_announcement.setText(ad.toString());
+        label_title.setText(ad.getTitle());
+        label_service.setText(ad.getService());
+        label_description.setText(ad.getDescription());
+        label_location.setText(ad.getLocation());
+        label_payment.setText(ad.getPayment());
     }
 }

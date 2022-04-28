@@ -4,6 +4,7 @@ import cca.Announcement;
 import cca.DBUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,10 +13,9 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.*;
 
-public class AdsListController extends Controller implements Initializable {
+public class AdsListController extends Controller implements Initializable, Comparator<Announcement> {
 
     @FXML
     private Button button_back;
@@ -54,17 +54,22 @@ public class AdsListController extends Controller implements Initializable {
 
     public void loadData(ArrayList<Announcement> adsList) {
         announcementObservableList.removeAll();
+        Comparator<Announcement> adComparator = Comparator.comparing(Announcement::getPromoted).reversed();
         announcementObservableList.addAll(adsList);
+        Collections.sort(announcementObservableList, adComparator);
+        SortedList<Announcement> sortedAnnouncements = new SortedList<>(announcementObservableList, adComparator);
         announcementListView.getItems().addAll(announcementObservableList);
+
         announcementListView.setCellFactory(announcementListView1 -> new ListCell<Announcement>() {
             public void updateItem(Announcement ad, boolean empty) {
                 super.updateItem(ad, empty);
                 if(empty) {
                     setText(null);
                 } else {
-                    setText(ad.getTitle() + "\nService: " + ad.getService());
+                    setText(ad.getTitle() + "        " + ((ad.getPromoted() == 1)? "Promoted":"") + "\nService: " + ad.getService());
                 }
             }
+
         });
         announcementListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -74,4 +79,12 @@ public class AdsListController extends Controller implements Initializable {
             }
         });
     }
+
+    @Override
+    public int compare(Announcement ad1, Announcement ad2) {
+        return ((Integer)ad1.getPromoted())
+        .compareTo((Integer)ad2.getPromoted());
+    }
+
+
 }

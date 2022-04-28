@@ -18,8 +18,14 @@
                         <Font name="Arial Rounded MT Bold" size="20.0" />
                     </font>
                 </Button>
-            <Button fx:id="button_edit" layoutX="474.0" layoutY="16.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="60.0" text="Edit" />
-            <Button fx:id="button_delete" layoutX="534.0" layoutY="16.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="60.0" text="Delete" />
+            <Button fx:id="button_edit" layoutX="469.0" layoutY="16.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="52.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="Edit">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font></Button>
+            <Button fx:id="button_delete" layoutX="521.0" layoutY="16.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="67.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="Delete">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font></Button>
             </children>
         </AnchorPane>
     </top>
@@ -42,10 +48,50 @@
     <center>
         <AnchorPane prefHeight="141.0" prefWidth="600.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="label_announcement" alignment="TOP_LEFT" contentDisplay="TOP" layoutY="1.0" lineSpacing="0.5" prefHeight="289.0" prefWidth="600.0" style="-fx-background-color: #F0E68C; -fx-border-color: #FFD700;">
+            <Label fx:id="label_title" alignment="CENTER" contentDisplay="TOP" layoutX="14.0" layoutY="14.0" lineSpacing="0.5" prefHeight="10.0" prefWidth="574.0" textAlignment="CENTER">
                <font>
                   <Font name="Arial" size="20.0" />
                </font></Label>
+            <Label fx:id="label_service" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="128.0" layoutY="52.0" lineSpacing="0.5" prefHeight="23.0" prefWidth="460.0">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_announcement2" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="88.0" lineSpacing="0.5" prefHeight="23.0" prefWidth="113.0" text="Description:">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_description" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="128.0" layoutY="88.0" prefHeight="95.0" prefWidth="454.0" wrapText="true">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_announcement21" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="52.0" lineSpacing="0.5" prefHeight="23.0" prefWidth="113.0" text="Service:">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_announcement22" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="192.0" lineSpacing="0.5" prefHeight="23.0" prefWidth="113.0" text="Location:">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_announcement221" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="230.0" lineSpacing="0.5" prefHeight="23.0" prefWidth="113.0" text="Payment:">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_location" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="127.0" layoutY="192.0" lineSpacing="0.5" prefHeight="23.0" prefWidth="456.0">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_payment" layoutX="127.0" layoutY="230.0" prefHeight="23.0" prefWidth="457.0">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
     </center>
 </BorderPane>
