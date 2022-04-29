@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFACD;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cca.controllers.AnnouncementController">
+   <top>
+      <AnchorPane prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #FF7F50;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="button_back" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="90.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="BACK">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Button>
+            <Label layoutX="182.0" layoutY="14.0" text="Announcement Info">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="25.0" />
+               </font>
+            </Label>
+            <Button fx:id="button_publish" layoutX="462.0" layoutY="12.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="123.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="PUBLISH">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #FF7F50;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="label_username" layoutX="14.0" layoutY="15.0" prefHeight="19.0" prefWidth="436.0" text="You are logged in as:">
+               <font>
+                  <Font name="Inter Regular" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="button_logout" layoutX="464.0" layoutY="7.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="121.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="LOG OUT">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <AnchorPane prefHeight="270.0" prefWidth="508.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="42.0" layoutY="14.0" prefHeight="10.0" prefWidth="124.0" text="Title">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="39.0" layoutY="55.0" prefHeight="5.0" prefWidth="150.0" text="Choose service">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tf_title" layoutX="233.0" layoutY="13.0" prefHeight="26.0" prefWidth="200.0" />
+            <ChoiceBox fx:id="choice_service" layoutX="232.0" layoutY="54.0" prefWidth="150.0" />
+            <Label fx:id="label_custom" layoutX="40.0" layoutY="90.0" prefHeight="14.0" prefWidth="148.0" text="Custom service">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tf_service" layoutX="232.0" layoutY="89.0" prefHeight="26.0" prefWidth="200.0" />
+            <Label layoutX="42.0" layoutY="134.0" prefHeight="23.0" prefWidth="143.0" text="Description">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tf_description" alignment="TOP_LEFT" layoutX="232.0" layoutY="134.0" prefHeight="67.0" prefWidth="200.0" />
+            <Label layoutX="42.0" layoutY="212.0" prefHeight="23.0" prefWidth="143.0" text="Location">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tf_location" layoutX="233.0" layoutY="211.0" prefHeight="26.0" prefWidth="200.0" />
+            <Label layoutX="42.0" layoutY="244.0" prefHeight="23.0" prefWidth="155.0" text="Payment method">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tf_payment" layoutX="232.0" layoutY="243.0" prefHeight="26.0" prefWidth="200.0" />
+            <Button fx:id="button_promote" layoutX="454.0" layoutY="49.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="131.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="PROMOTE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Button>
+            <CheckBox fx:id="checkbox_promoted" disable="true" layoutX="462.0" layoutY="242.0" mnemonicParsing="false" opacity="1" text="Promoted">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </CheckBox>
+         </children></AnchorPane>
+   </center>
+</BorderPane>

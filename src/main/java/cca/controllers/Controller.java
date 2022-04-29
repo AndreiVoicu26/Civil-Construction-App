@@ -1,45 +1,23 @@
 package cca.controllers;
 
-import cca.DBUtils;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import cca.Announcement;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class Controller implements Initializable {
+public class Controller {
 
     @FXML
-    private Button button_login;
-    @FXML
-    private Button button_sign_up;
+    private Label label_username;
 
-    @FXML
-    private TextField tf_username;
-    @FXML
-    private PasswordField tf_password;
+    protected String username = null;
+    protected String role = null;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void setUserInformation(String username, String role) {
+        label_username.setText("You are logged in as: " + username + " (" + role + ")");
+    }
 
-        button_login.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.logInUser(event, tf_username.getText(), tf_password.getText());
-            }
-        });
-
-        button_sign_up.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "sign-up.fxml", "Register", null, null);
-            }
-        });
-
+    public void saveUserInformation(String username, String role) {
+        this.username = username;
+        this.role = role;
     }
 }
