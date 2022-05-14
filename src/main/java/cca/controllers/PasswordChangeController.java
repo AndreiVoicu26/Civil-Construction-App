@@ -1,7 +1,7 @@
 package cca.controllers;
 
-import cca.Announcement;
 import cca.DBUtils;
+import cca.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,23 +9,25 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import org.w3c.dom.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomeContractantController extends Controller implements Initializable {
+public class PasswordChangeController extends Controller implements Initializable {
 
+    @FXML
+    private Button button_back;
     @FXML
     private Button button_logout;
     @FXML
-    private Button button_announcement;
+    private Button button_save;
+
     @FXML
-    private Button button_adslist;
+    private TextField tf_oldpassword;
     @FXML
-    private Button button_clientslist;
-    @FXML
-    private Button button_info;
+    private TextField tf_newpassword;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,33 +46,18 @@ public class HomeContractantController extends Controller implements Initializab
             }
         });
 
-        button_announcement.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "announcement.fxml", "Add announcement", username, role);
-            }
-        });
-
-        button_adslist.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.takeAnnouncements(event,"ads-list.fxml","Announcements List", username, role);
-            }
-        });
-
-        button_clientslist.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "clients-list.fxml", "Customers List", username, role);
-            }
-        });
-
-        button_info.setOnAction(new EventHandler<ActionEvent>() {
+        button_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.takeInfo(event, "account-info.fxml", "Info", username, role);
             }
         });
 
+        button_save.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changePassword(event, username, role, tf_oldpassword.getText(), tf_newpassword.getText());
+            }
+        });
     }
 }

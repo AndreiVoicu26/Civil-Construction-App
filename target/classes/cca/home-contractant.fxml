@@ -13,6 +13,11 @@
                         <Font name="Arial Rounded MT Bold" size="30.0" />
                     </font>
                 </Label>
+            <Button fx:id="button_info" layoutX="504.0" layoutY="22.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="81.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="INFO" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </top>
