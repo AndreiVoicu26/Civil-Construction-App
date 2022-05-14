@@ -27,7 +27,7 @@ public class AdEditController extends Controller implements Initializable {
     @FXML
     private TextField tf_service;
     @FXML
-    private TextField tf_description;
+    private TextArea tf_description;
     @FXML
     private TextField tf_location;
     @FXML
@@ -141,7 +141,7 @@ public class AdEditController extends Controller implements Initializable {
 
     public void getAnnouncement(Announcement ad) {
         this.ad = ad;
-        choice_service.getItems().addAll("Service 1", "Service 2", "Service 3", "Other option");
+        choice_service.getItems().addAll("Electrical Installation", "Sanitary Installation", "Roof Construction", "Foundation Casting", "Bricklaying", "Yard Paving", "Other option");
         int ok = 0;
         tf_title.setText(ad.getTitle());
         for(String current: choice_service.getItems()) {
