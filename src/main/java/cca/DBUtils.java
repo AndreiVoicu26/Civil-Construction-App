@@ -291,6 +291,8 @@ public class DBUtils {
 
                         if(role.equals("Contractant")) {
                             changeScene(event, "home-contractant.fxml", "Home", username, role);
+                        }else {
+                            DBUtils.takeContractants(event, "contractants-list.fxml", "Contractants List", username, role);
                         }
                     }
                 }
@@ -350,6 +352,8 @@ public class DBUtils {
                     if(retrievedPassword.equals(toHexString(getSHA(password)))) {
                         if(retrievedRole.equals("Contractant")) {
                             changeScene(event, "home-contractant.fxml", "Home", username, retrievedRole);
+                        } else {
+                            DBUtils.takeContractants(event, "contractants-list.fxml", "Contractants List", username, retrievedRole);
                         }
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -613,7 +617,81 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+    public static void takeContractants(ActionEvent event, String fxmlFile, String title, String username, String role) {
+        ArrayList<User> contractantsArrayList = new ArrayList<User>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE role = ?");
+            preparedStatement.setString(1, "Contractant");
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("No contractants found");
+                alert.show();
+                return;
+            } else {
+                while(resultSet.next()) {
+                    String retrievedName = resultSet.getString("fullname");
+                    String retrievedEmail = resultSet.getString("email");
+                    String retrievedPhone = resultSet.getString("phone");
+                    String retrievedAddress = resultSet.getString("address");
+                    String retrievedUsername = resultSet.getString("username");
+                    //int retrievedID = resultSet.getInt("announcement_id");
+                    contractantsArrayList.add(new User(retrievedName, retrievedEmail, retrievedPhone, retrievedAddress, retrievedUsername));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            ContractantsListController listController = loader.getController();
+            listController.loadData(contractantsArrayList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+
+    }
     public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
         /* MessageDigest instance for hashing using SHA512*/
         MessageDigest md = MessageDigest.getInstance("SHA-512");
@@ -637,6 +715,7 @@ public class DBUtils {
 
         return hexString.toString();
     }
+
 
 
 }
