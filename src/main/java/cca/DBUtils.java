@@ -617,6 +617,83 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+    public static void takeContractantsAds(Event event, String fxmlFile, String title, String username, String role, User user) {
+        ArrayList<Announcement> announcementArrayList = new ArrayList<Announcement>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM announcements WHERE username = ?");
+            preparedStatement.setString(1,user.getUsername());
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(user.getName() + " has no announcements published!");
+                alert.show();
+                return;
+            } else {
+                while(resultSet.next()) {
+                    String retrievedTitle = resultSet.getString("title");
+                    String retrievedService = resultSet.getString("service");
+                    String retrievedDescription = resultSet.getString("description");
+                    String retrievedLocation = resultSet.getString("location");
+                    String retrievedPayment = resultSet.getString("payment");
+                    int retrievedID = resultSet.getInt("announcement_id");
+                    int retrievedPromoted = resultSet.getInt("promoted");
+                    announcementArrayList.add(new Announcement(retrievedTitle, retrievedService, retrievedDescription, retrievedLocation, retrievedPayment, retrievedID, retrievedPromoted));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            ContractantAdsController listController = loader.getController();
+            listController.loadData(announcementArrayList);
+            listController.getUser(user);
+            listController.setLabel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
     public static void takeContractants(ActionEvent event, String fxmlFile, String title, String username, String role) {
         ArrayList<User> contractantsArrayList = new ArrayList<User>();
         Connection connection = null;

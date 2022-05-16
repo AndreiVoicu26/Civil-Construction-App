@@ -66,6 +66,13 @@ public class ContractantsListController extends Controller implements Initializa
             }
 
         });
+        contractantsListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                User user = contractantsListView.getSelectionModel().getSelectedItem();
+                DBUtils.takeContractantsAds(event, "contractant-ads.fxml","Contractant Announcements",username, role, user);
+            }
+        });
 
     }
 }
