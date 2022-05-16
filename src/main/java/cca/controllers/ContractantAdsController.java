@@ -81,6 +81,13 @@ public class ContractantAdsController extends Controller implements Initializabl
             }
 
         });
+        announcementListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Announcement ad = announcementListView.getSelectionModel().getSelectedItem();
+                DBUtils.changeScene9(event, "ad-details-client.fxml", "Announcement Information", username, role, ad, user);
+            }
+        });
 
     }
 
