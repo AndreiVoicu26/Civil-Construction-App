@@ -1,7 +1,7 @@
 package cca.controllers;
 
-import cca.Announcement;
 import cca.DBUtils;
+import cca.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,18 +14,27 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomeContractantController extends Controller implements Initializable {
+public class AccountInfoController extends Controller implements Initializable {
 
+    @FXML
+    private Label label_name;
+    @FXML
+    private Label label_email;
+    @FXML
+    private Label label_phone;
+    @FXML
+    private Label label_address;
+
+    @FXML
+    private Button button_back;
     @FXML
     private Button button_logout;
     @FXML
-    private Button button_announcement;
+    private Button button_edit;
     @FXML
-    private Button button_adslist;
-    @FXML
-    private Button button_clientslist;
-    @FXML
-    private Button button_info;
+    private Button button_password;
+
+    private User user;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,33 +53,34 @@ public class HomeContractantController extends Controller implements Initializab
             }
         });
 
-        button_announcement.setOnAction(new EventHandler<ActionEvent>() {
+        button_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "announcement.fxml", "Add announcement", username, role);
+                DBUtils.changeScene(event, "home-contractant.fxml", "Home", username, role);
             }
         });
 
-        button_adslist.setOnAction(new EventHandler<ActionEvent>() {
+        button_edit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.takeAnnouncements(event,"ads-list.fxml","Announcements List", username, role);
+                DBUtils.changeScene7(event, "edit-user.fxml","Edit User", username, role, user);
             }
         });
 
-        button_clientslist.setOnAction(new EventHandler<ActionEvent>() {
+        button_password.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "clients-list.fxml", "Customers List", username, role);
+                DBUtils.changeScene(event, "change-password.fxml", "Change password", username, role);
             }
         });
 
-        button_info.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.takeInfo(event, "account-info.fxml", "Info", username, role);
-            }
-        });
+    }
 
+    public void getUser(User user) {
+        this.user = user;
+        label_name.setText("Name: " + user.getName());
+        label_email.setText("Email: " + user.getEmail());
+        label_phone.setText("Phone: " + user.getPhone());
+        label_address.setText("Address: " + user.getAddress());
     }
 }
