@@ -45,7 +45,12 @@ public class HomeCustomerController extends Controller implements Initializable 
                 DBUtils.takeContractants(event, "contractants-list.fxml", "Contractants List", username, role);
             }
         });
-
+        button_announcements.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.takeAdsCustomer(event, "ads-list-customer.fxml", "Announcements List", username, role);
+            }
+        });
 
     }
 }
