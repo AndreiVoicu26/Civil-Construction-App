@@ -507,7 +507,7 @@ public class DBUtils {
                         if(role.equals("Contractant")) {
                             changeScene(event, "home-contractant.fxml", "Home", username, role);
                         }else {
-                            DBUtils.takeContractants(event, "contractants-list.fxml", "Contractants List", username, role);
+                            changeScene(event, "home-customer.fxml", "Home", username, role );
                         }
                     }
                 }
@@ -568,7 +568,7 @@ public class DBUtils {
                         if(retrievedRole.equals("Contractant")) {
                             changeScene(event, "home-contractant.fxml", "Home", username, retrievedRole);
                         } else {
-                            DBUtils.takeContractants(event, "contractants-list.fxml", "Contractants List", username, retrievedRole);
+                            changeScene(event, "home-customer.fxml", "Home", username, retrievedRole);
                         }
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);

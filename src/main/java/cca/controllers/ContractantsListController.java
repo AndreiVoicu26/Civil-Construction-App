@@ -32,6 +32,9 @@ public class ContractantsListController extends Controller implements Initializa
     private Button button_clear;
 
     @FXML
+    private Button button_back;
+
+    @FXML
     private TextField tf_search;
 
     @FXML
@@ -154,6 +157,13 @@ public class ContractantsListController extends Controller implements Initializa
             public void handle(ActionEvent actionEvent) {
                 contractantsListView.getItems().clear();
                 contractantsListView.getItems().addAll(contractantsObservableList);
+            }
+        });
+
+        button_back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "home-customer.fxml", "Home", username, role);
             }
         });
     }
