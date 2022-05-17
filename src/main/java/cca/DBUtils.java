@@ -1019,6 +1019,64 @@ public class DBUtils {
         stage.show();
 
     }
+
+    public static ArrayList<User> takeContractantsWithSpecificService(String Service) {
+        ArrayList<User> contractantsArrayList = new ArrayList<User>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        ResultSet resultSet = null;
+        ResultSet resultSet2 = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM announcements WHERE service = ?");
+            preparedStatement.setString(1, Service);
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                String retrievedUsername = resultSet.getString("username");
+                preparedStatement2 = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+                preparedStatement2.setString(1, retrievedUsername);
+                resultSet2 = preparedStatement2.executeQuery();
+
+                while(resultSet2.next()) {
+                    String retrievedName = resultSet2.getString("fullname");
+                    String retrievedEmail = resultSet2.getString("email");
+                    String retrievedPhone = resultSet2.getString("phone");
+                    String retrievedAddress = resultSet2.getString("address");
+                    contractantsArrayList.add(new User(retrievedName, retrievedEmail, retrievedPhone, retrievedAddress, retrievedUsername));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return contractantsArrayList;
+    }
     public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
         /* MessageDigest instance for hashing using SHA512*/
         MessageDigest md = MessageDigest.getInstance("SHA-512");

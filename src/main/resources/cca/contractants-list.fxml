@@ -32,10 +32,24 @@
             </children>
         </AnchorPane>
     </bottom>
-    <center>
+    <right>
         <AnchorPane prefHeight="270.0" prefWidth="508.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
             <children>
-                <ListView fx:id="contractantsListView" layoutY="-1.0" prefHeight="285.0" prefWidth="600.0" />
+                <ListView fx:id="contractantsListView" layoutY="-1.0" prefHeight="290.0" prefWidth="463.0" />
+                <TextField fx:id="tf_search" layoutX="463.0" layoutY="32.0" prefHeight="28.0" prefWidth="135.0" promptText="Search Contractant" />
+                <Button fx:id="button_search" layoutX="463.0" layoutY="187.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="SEARCH">
+                    <font>
+                        <Font name="Arial" size="12.0" />
+                    </font>
+                </Button>
+                <Button fx:id="button_clear" layoutX="463.0" layoutY="238.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" text="SHOW ALL">
+                    <font>
+                        <Font name="Arial" size="12.0" />
+                    </font>
+                </Button>
+                <ComboBox fx:id="combobox_filters" layoutX="463.0" layoutY="1.0" prefHeight="30.0" prefWidth="135.0" promptText="FILTER BY" />
+                <ComboBox fx:id="combobox_services" layoutX="463.0" layoutY="31.0" prefHeight="30.0" prefWidth="135.0" promptText="SERVICES" />
+                <TextField fx:id="tf_service" layoutX="463.0" layoutY="61.0" prefHeight="28.0" prefWidth="135.0" promptText="Search Service" />
             </children></AnchorPane>
-    </center>
+    </right>
 </BorderPane>

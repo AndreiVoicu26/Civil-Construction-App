@@ -26,12 +26,42 @@ public class ContractantsListController extends Controller implements Initializa
     private Button button_logout;
 
     @FXML
+    private Button button_search;
+
+    @FXML
+    private Button button_clear;
+
+    @FXML
+    private TextField tf_search;
+
+    @FXML
+    private TextField tf_service;
+
+    @FXML
+    private ComboBox<String> combobox_filters;
+
+    @FXML
+    private ComboBox<String> combobox_services;
+
+    @FXML
     private ListView<User> contractantsListView;
 
     private ObservableList<User> contractantsObservableList = FXCollections.observableArrayList();
 
+    private ObservableList<User> contractantsObservableList2 = FXCollections.observableArrayList();
+
+    private ArrayList<User> contractantsList;
+
+    private ArrayList<User> contractantsArrayList;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        tf_search.setVisible(false);
+        tf_service.setVisible(false);
+        combobox_services.setVisible(false);
+        button_search.setVisible(false);
+        button_clear.setVisible(false);
 
         button_logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -46,7 +76,88 @@ public class ContractantsListController extends Controller implements Initializa
                 }
             }
         });
+
+        combobox_filters.getItems().addAll("Name", "Service", "Location");
+        combobox_services.getItems().addAll("All", "Electrical Installation", "Sanitary Installation", "Roof Construction", "Foundation Casting", "Bricklaying", "Yard Paving", "Other option");
+
+
+        combobox_filters.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(combobox_filters.getValue().equals("Service")) {
+                    combobox_services.setVisible(true);
+                    combobox_services.getSelectionModel().selectFirst();
+                } else {
+                    tf_search.setVisible(true);
+                    tf_search.setPromptText("Search " + combobox_filters.getValue());
+                    tf_search.clear();
+                    tf_service.setVisible(false);
+                    combobox_services.getSelectionModel().selectFirst();
+                    combobox_services.setVisible(false);
+                }
+                button_search.setVisible(true);
+                button_clear.setVisible(true);
+            }
+        });
+
+        combobox_services.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(combobox_services.getValue().equals("Other option")) {
+                    tf_service.setVisible(true);
+                } else {
+                    tf_service.setVisible(false);
+                }
+            }
+        });
+
+        button_search.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(combobox_filters.getValue().equals("Name")) {
+                    contractantsListView.getItems().clear();
+                    contractantsListView.getItems().addAll(contractantsObservableList.filtered(user -> user.getName().contains(tf_search.getText()) || user.getName().toLowerCase().contains(tf_search.getText())));
+                } else {
+                    if (combobox_filters.getValue().equals("Location")) {
+                        contractantsListView.getItems().clear();
+                        contractantsListView.getItems().addAll(contractantsObservableList.filtered(user -> user.getAddress().contains(tf_search.getText())));
+                    } else {
+                        if (combobox_filters.getValue().equals("Service")) {
+                            if(combobox_services.getValue().equals("All")) {
+                                contractantsListView.getItems().clear();
+                                contractantsListView.getItems().addAll(contractantsObservableList);
+                            } else {
+                                if(combobox_services.getValue().equals("Other option")) {
+                                    contractantsArrayList = DBUtils.takeContractantsWithSpecificService(tf_service.getText());
+                                } else {
+                                    contractantsArrayList = DBUtils.takeContractantsWithSpecificService(combobox_services.getValue());
+                                }
+                                contractantsObservableList2.clear();
+                                contractantsObservableList2.addAll(contractantsArrayList);
+                                contractantsListView.getItems().clear();
+                                contractantsListView.getItems().addAll(contractantsObservableList2);
+                            }
+                        }
+                    }
+                }
+
+                if(contractantsListView.getItems().stream().count() == 0) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText("No contractants found!");
+                    alert.show();
+                }
+            }
+        });
+
+        button_clear.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                contractantsListView.getItems().clear();
+                contractantsListView.getItems().addAll(contractantsObservableList);
+            }
+        });
     }
+
 
     public void loadData(ArrayList<User> contractantsList) {
         contractantsObservableList.removeAll();
