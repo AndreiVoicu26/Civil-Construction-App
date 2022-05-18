@@ -148,45 +148,7 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
-    public static void changeScene9(MouseEvent event, String fxmlFile, String title, String username, String role, Announcement ad, User user) {
-        Parent root = null;
 
-        try {
-            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
-            root = loader.load();
-            Controller homeController = loader.getController();
-            homeController.setUserInformation(username, role);
-            homeController.saveUserInformation(username, role);
-            AdDetailsClientController adController = loader.getController();
-            adController.displayAnnouncement(ad);
-            adController.getUser(user);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
-        stage.setScene(new Scene(root, 600, 400));
-        stage.show();
-    }
-    public static void changeScene10(MouseEvent event, String fxmlFile, String title, String username, String role, Announcement ad) {
-        Parent root = null;
-
-        try {
-            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
-            root = loader.load();
-            Controller homeController = loader.getController();
-            homeController.setUserInformation(username, role);
-            homeController.saveUserInformation(username, role);
-            AdDetailsCustomerController adController = loader.getController();
-            adController.displayAnnouncement(ad);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
-        stage.setScene(new Scene(root, 600, 400));
-        stage.show();
-    }
 
     public static void changeScene7(ActionEvent event, String fxmlFile, String title, String username, String role, User user) {
         Parent root = null;
@@ -227,7 +189,45 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+    public static void changeScene9(MouseEvent event, String fxmlFile, String title, String username, String role, Announcement ad, User user) {
+        Parent root = null;
 
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdDetailsClientController adController = loader.getController();
+            adController.displayAnnouncement(ad);
+            adController.getUser(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+    public static void changeScene10(Event event, String fxmlFile, String title, String username, String role, Announcement ad) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdDetailsCustomerController adController = loader.getController();
+            adController.displayAnnouncement(ad);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
     public static void changePassword(ActionEvent event, String username, String role, String oldPassword, String newPassword) {
         Connection connection = null;
         PreparedStatement psCheckPassword = null;
@@ -1221,6 +1221,95 @@ public class DBUtils {
         }
 
         return adsArrayList;
+    }
+    public static void takeContractantInfo(ActionEvent event, String fxmlFile, String title, String username, String role, Announcement ad) {
+        User contractant = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        ResultSet resultSet = null;
+        ResultSet resultSet2 = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM announcements WHERE announcement_id = ?");
+            preparedStatement.setInt(1, ad.getID());
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                String retrievedUsername = resultSet.getString("username");
+                preparedStatement2 = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+                preparedStatement2.setString(1,retrievedUsername);
+                resultSet2 = preparedStatement2.executeQuery();
+
+                while(resultSet2.next()) {
+                    String retrievedName = resultSet2.getString("fullname");
+                    String retrievedEmail = resultSet2.getString("email");
+                    String retrievedPhone = resultSet2.getString("phone");
+                    String retrievedAddress = resultSet2.getString("address");
+                    contractant = new User(retrievedName, retrievedEmail, retrievedPhone, retrievedAddress, retrievedUsername);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet2 != null) {
+                try {
+                    resultSet2.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement2 != null) {
+                try {
+                    preparedStatement2.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            ContractantDetailsController detailsController = loader.getController();
+            detailsController.getContractant(contractant);
+            detailsController.getAd(ad);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
     }
     public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
         /* MessageDigest instance for hashing using SHA512*/

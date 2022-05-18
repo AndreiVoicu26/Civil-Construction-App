@@ -2,6 +2,7 @@ package cca.controllers;
 
 import cca.Announcement;
 import cca.DBUtils;
+import cca.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,27 +15,27 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdDetailsCustomerController extends Controller implements Initializable {
-
-    @FXML
-    private Label label_title;
-    @FXML
-    private Label label_service;
-    @FXML
-    private Label label_description;
-    @FXML
-    private Label label_location;
-    @FXML
-    private Label label_payment;
+public class ContractantDetailsController extends Controller implements Initializable {
 
     @FXML
     private Button button_back;
     @FXML
     private Button button_logout;
     @FXML
-    private Button button_contractant;
+    private Button button_request;
+
+    @FXML
+    private Label label_name;
+    @FXML
+    private Label label_email;
+    @FXML
+    private Label label_phone;
+    @FXML
+    private Label label_address;
 
     private Announcement ad;
+
+    private User contractant;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -55,24 +56,22 @@ public class AdDetailsCustomerController extends Controller implements Initializ
         button_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.takeAdsCustomer(event, "ads-list-customer.fxml", "Announcements List", username, role);
+                DBUtils.changeScene10(event, "ad-details-customer.fxml","Announcement Information",username, role, ad);
             }
         });
 
-        button_contractant.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.takeContractantInfo(event, "contractant-details.fxml", "Contractant Details", username, role, ad);
-            }
-        });
     }
 
-    public void displayAnnouncement(Announcement ad) {
+    public void getAd(Announcement ad) {
         this.ad = ad;
-        label_title.setText(ad.getTitle());
-        label_service.setText(ad.getService());
-        label_description.setText(ad.getDescription());
-        label_location.setText(ad.getLocation());
-        label_payment.setText(ad.getPayment());
     }
+
+    public void getContractant(User contractant) {
+        this.contractant = contractant;
+        label_name.setText("Name: " + contractant.getName());
+        label_email.setText("Email: " + contractant.getEmail());
+        label_phone.setText("Phone: " + contractant.getPhone());
+        label_address.setText("Address: " + contractant.getAddress());
+    }
+
 }

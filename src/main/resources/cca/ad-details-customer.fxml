@@ -38,7 +38,7 @@
         </AnchorPane>
     </bottom>
     <center>
-        <AnchorPane prefHeight="141.0" prefWidth="600.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="253.0" prefWidth="600.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
             <children>
                 <Label fx:id="label_title" alignment="CENTER" contentDisplay="TOP" layoutX="14.0" layoutY="14.0" lineSpacing="0.5" prefHeight="10.0" prefWidth="574.0" textAlignment="CENTER">
                     <font>
@@ -84,6 +84,11 @@
                         <Font name="Arial" size="20.0" />
                     </font>
                 </Label>
+                <Button fx:id="button_contractant" layoutX="1.0" layoutY="262.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="600.0" style="-fx-cursor: hand;" text="CONTRACTANT">
+                    <font>
+                        <Font name="Arial Rounded MT Bold" size="20.0" />
+                    </font>
+                </Button>
             </children></AnchorPane>
     </center>
 </BorderPane>
