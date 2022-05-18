@@ -61,7 +61,7 @@ public class HomeContractantController extends Controller implements Initializab
         button_clientslist.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "clients-list.fxml", "Customers List", username, role);
+                DBUtils.takeRequests2(event, "clients-list.fxml", "Customers Requests", username, role);
             }
         });
 

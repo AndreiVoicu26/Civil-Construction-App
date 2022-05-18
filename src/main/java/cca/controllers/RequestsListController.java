@@ -67,7 +67,7 @@ public class RequestsListController extends Controller implements Initializable 
                 if(empty) {
                     setText(null);
                 } else {
-                    setText("Sent to: " + request.getContractant().getName() + "\nStatus: " + request.getStatus());
+                    setText("Sent to: " + request.getUser().getName() + "\nStatus: " + request.getStatus());
                 }
             }
         });

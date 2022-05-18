@@ -22,6 +22,8 @@ public class HomeCustomerController extends Controller implements Initializable 
     private Button button_contractants;
     @FXML
     private Button button_requests;
+    @FXML
+    private Button button_info;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -56,6 +58,13 @@ public class HomeCustomerController extends Controller implements Initializable 
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.takeRequests(event, "requests-list.fxml", "Requests", username, role);
+            }
+        });
+
+        button_info.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.takeInfo(event, "account-info.fxml", "Info", username, role);
             }
         });
 

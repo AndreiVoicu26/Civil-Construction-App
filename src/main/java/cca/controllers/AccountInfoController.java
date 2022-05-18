@@ -24,6 +24,10 @@ public class AccountInfoController extends Controller implements Initializable {
     private Label label_phone;
     @FXML
     private Label label_address;
+    @FXML
+    private Label label_username;
+    @FXML
+    private Label label_role;
 
     @FXML
     private Button button_back;
@@ -56,7 +60,12 @@ public class AccountInfoController extends Controller implements Initializable {
         button_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "home-contractant.fxml", "Home", username, role);
+                if(role.equals("Contractant")) {
+                    DBUtils.changeScene(event, "home-contractant.fxml", "Home", username, role);
+                } else {
+                    DBUtils.changeScene(event, "home-customer.fxml", "Home", username, role);
+                }
+
             }
         });
 
@@ -78,6 +87,8 @@ public class AccountInfoController extends Controller implements Initializable {
 
     public void getUser(User user) {
         this.user = user;
+        label_username.setText("Username: " + username);
+        label_role.setText("Role: " + role);
         label_name.setText("Name: " + user.getName());
         label_email.setText("Email: " + user.getEmail());
         label_phone.setText("Phone: " + user.getPhone());

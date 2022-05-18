@@ -189,6 +189,7 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+
     public static void changeScene9(MouseEvent event, String fxmlFile, String title, String username, String role, Announcement ad, User user) {
         Parent root = null;
 
@@ -209,6 +210,7 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+
     public static void changeScene10(Event event, String fxmlFile, String title, String username, String role, Announcement ad) {
         Parent root = null;
 
@@ -228,6 +230,7 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+
     public static void changeScene11(ActionEvent event, String fxmlFile, String title, String username, String role, User user) {
         Parent root = null;
 
@@ -249,6 +252,7 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+
     public static void changeScene12(ActionEvent event, String fxmlFile, String title, String username, String role, User user, Announcement ad) {
         Parent root = null;
 
@@ -271,6 +275,7 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+
     public static void changeScene13(MouseEvent event, String fxmlFile, String title, String username, String role, Request request) {
         Parent root = null;
 
@@ -290,6 +295,27 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+
+    public static void changeScene14(MouseEvent event, String fxmlFile, String title, String username, String role, Request request) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            RequestReviewController requestController = loader.getController();
+            requestController.getRequest(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
     public static void changePassword(ActionEvent event, String username, String role, String oldPassword, String newPassword) {
         Connection connection = null;
         PreparedStatement psCheckPassword = null;
@@ -1234,6 +1260,7 @@ public class DBUtils {
 
         return contractantsArrayList;
     }
+
     public static ArrayList<Announcement> takeAnnouncementsWithSpecificService(String Service) {
         ArrayList<Announcement> adsArrayList = new ArrayList<Announcement>();
         Connection connection = null;
@@ -1285,6 +1312,7 @@ public class DBUtils {
 
         return adsArrayList;
     }
+
     public static void takeContractantInfo(ActionEvent event, String fxmlFile, String title, String username, String role, Announcement ad) {
         User contractant = null;
         Connection connection = null;
@@ -1364,7 +1392,7 @@ public class DBUtils {
             ContractantDetailsController detailsController = loader.getController();
             detailsController.getContractant(contractant);
             detailsController.getAd(ad);
-
+            detailsController.setButton_request();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1374,43 +1402,54 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+
     public static void sendRequest(String username, String role, User user, String request) {
         Connection connection = null;
         PreparedStatement psInsert = null;
         PreparedStatement psCheckRequestExists = null;
+        PreparedStatement psDelete = null;
         ResultSet resultSet = null;
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
-            psCheckRequestExists = connection.prepareStatement("SELECT * FROM requests WHERE contractant = ? AND customer = ? AND status = ?");
+            psCheckRequestExists = connection.prepareStatement("SELECT * FROM requests WHERE contractant = ? AND customer = ?");
             psCheckRequestExists.setString(1, user.getUsername());
             psCheckRequestExists.setString(2, username);
-            psCheckRequestExists.setString(3, "pending");
             resultSet = psCheckRequestExists.executeQuery();
 
-            if (resultSet.isBeforeFirst()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Request already sent! Wait for a response from " + user.getName() + "!");
-                alert.show();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setHeaderText("Are you sure you want to send request to " + user.getName() + "?");
-                alert.showAndWait();
-                if(alert.getResult() == ButtonType.OK) {
-                    psInsert = connection.prepareStatement("INSERT INTO requests (contractant, customer, request, status) VALUES (?, ?, ?, ?)");
-                    psInsert.setString(1, user.getUsername());
-                    psInsert.setString(2, username);
-                    psInsert.setString(3, request);
-                    psInsert.setString(4, "pending");
-                    psInsert.executeUpdate();
-
-                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                    alert2.setHeaderText("Request was sent to " + user.getName() + "!");
-                    alert2.showAndWait();
-                } else {
-                    alert.close();
+            if (resultSet.isBeforeFirst() ) {
+                while(resultSet.next()) {
+                    String retrievedStatus = resultSet.getString("status");
+                    if (retrievedStatus.equals("Pending")) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Request already sent! Wait for a response from " + user.getName() + "!");
+                        alert.show();
+                        return;
+                    } else {
+                        psDelete = connection.prepareStatement("DELETE FROM requests WHERE contractant = ? AND customer = ?");
+                        psDelete.setString(1, user.getUsername());
+                        psDelete.setString(2, username);
+                        psDelete.executeUpdate();
+                    }
                 }
+            }
 
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Are you sure you want to send request to " + user.getName() + "?");
+            alert.showAndWait();
+            if(alert.getResult() == ButtonType.OK) {
+                psInsert = connection.prepareStatement("INSERT INTO requests (contractant, customer, request, status) VALUES (?, ?, ?, ?)");
+                psInsert.setString(1, user.getUsername());
+                psInsert.setString(2, username);
+                psInsert.setString(3, request);
+                psInsert.setString(4, "Pending");
+                psInsert.executeUpdate();
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setHeaderText("Request was sent to " + user.getName() + "!");
+                alert2.showAndWait();
+            } else {
+                alert.close();
             }
 
         } catch (SQLException e) {
@@ -1446,12 +1485,14 @@ public class DBUtils {
             }
         }
     }
+
     public static void takeRequests(ActionEvent event, String fxmlFile, String title, String username, String role) {
         ArrayList<Request> requestArrayList = new ArrayList<Request>();
         User contractant = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement2 = null;
+        PreparedStatement preparedStatement3 = null;
         ResultSet resultSet = null;
         ResultSet resultSet2 = null;
 
@@ -1484,15 +1525,30 @@ public class DBUtils {
                         String retrievedAddress = resultSet2.getString("address");
                         contractant = new User(retrievedName, retrievedEmail, retrievedPhone, retrievedAddress, retrievedContractant);
                     }
+
                     requestArrayList.add(new Request(contractant, retrievedRequest, retrievedStatus, retrievedResponse));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            if (resultSet2 != null) {
+                try {
+                    resultSet2.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             if (resultSet != null) {
                 try {
                     resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement2 != null) {
+                try {
+                    preparedStatement2.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -1533,6 +1589,147 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+
+    public static void takeRequests2(ActionEvent event, String fxmlFile, String title, String username, String role) {
+        ArrayList<Request> requestArrayList = new ArrayList<Request>();
+        User customer = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        PreparedStatement preparedStatement3 = null;
+        ResultSet resultSet = null;
+        ResultSet resultSet2 = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM requests WHERE contractant = ?");
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("You have no requests from customers!");
+                alert.show();
+                return;
+            } else {
+                while(resultSet.next()) {
+                    String retrievedCustomer = resultSet.getString("customer");
+                    String retrievedRequest = resultSet.getString("request");
+                    String retrievedStatus = resultSet.getString("status");
+                    String retrievedResponse = resultSet.getString("response");
+
+                    preparedStatement2 = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+                    preparedStatement2.setString(1, retrievedCustomer);
+                    resultSet2 = preparedStatement2.executeQuery();
+
+                    while(resultSet2.next()) {
+                        String retrievedName = resultSet2.getString("fullname");
+                        String retrievedEmail = resultSet2.getString("email");
+                        String retrievedPhone = resultSet2.getString("phone");
+                        String retrievedAddress = resultSet2.getString("address");
+                        customer = new User(retrievedName, retrievedEmail, retrievedPhone, retrievedAddress, retrievedCustomer);
+                    }
+
+                    requestArrayList.add(new Request(customer, retrievedRequest, retrievedStatus, retrievedResponse));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet2 != null) {
+                try {
+                    resultSet2.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement2 != null) {
+                try {
+                    preparedStatement2.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            ClientsListController listController = loader.getController();
+            listController.loadData(requestArrayList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
+    public static void updateRequest(ActionEvent event, String username, String role, String customer, String response, String status) {
+        Connection connection = null;
+        PreparedStatement psUpdate = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            psUpdate = connection.prepareStatement("UPDATE requests SET response = ?, status = ? WHERE contractant = ? AND customer = ?");
+            psUpdate.setString(1, response);
+            psUpdate.setString(2, status);
+            psUpdate.setString(3, username);
+            psUpdate.setString(4, customer);
+            psUpdate.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (psUpdate != null) {
+                try {
+                    psUpdate.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        DBUtils.takeRequests2(event,"clients-list.fxml","Requests", username, role);
+    }
+
+
     public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
         /* MessageDigest instance for hashing using SHA512*/
         MessageDigest md = MessageDigest.getInstance("SHA-512");

@@ -1,20 +1,20 @@
 package cca;
 
 public class Request {
-    private User contractant;
+    private User user;
     private String request;
     private String response;
     private String status;
 
-    public Request(User contractant, String request, String status, String response) {
-        this.contractant = contractant;
+    public Request(User user, String request, String status, String response) {
+        this.user = user;
         this.request = request;
         this.status = status;
         this.response = response;
     }
 
-    public User getContractant() {
-        return contractant;
+    public User getUser() {
+        return user;
     }
 
     public String getRequest() {

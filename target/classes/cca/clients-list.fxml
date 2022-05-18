@@ -40,7 +40,7 @@
     <center>
         <AnchorPane prefHeight="270.0" prefWidth="508.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
             <children>
-                <ListView layoutY="-1.0" prefHeight="285.0" prefWidth="600.0" />
+                <ListView fx:id="requestListView" layoutY="-1.0" prefHeight="285.0" prefWidth="600.0" />
             </children></AnchorPane>
     </center>
 </BorderPane>
