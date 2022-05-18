@@ -25,6 +25,8 @@ public class ContractantAdsController extends Controller implements Initializabl
     private Button button_back;
     @FXML
     private Button button_logout;
+    @FXML
+    private Button button_request;
 
     @FXML
     private Label label_name;
@@ -59,6 +61,13 @@ public class ContractantAdsController extends Controller implements Initializabl
                 DBUtils.takeContractants(event, "contractants-list.fxml", "Contractants List", username, role);
             }
         });
+
+        button_request.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene11(event, "customer-request.fxml", "Send Request", username, role, user);
+            }
+        });
     }
 
     public void loadData(ArrayList<Announcement> adsList) {
@@ -81,6 +90,7 @@ public class ContractantAdsController extends Controller implements Initializabl
             }
 
         });
+
         announcementListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -88,7 +98,6 @@ public class ContractantAdsController extends Controller implements Initializabl
                 DBUtils.changeScene9(event, "ad-details-client.fxml", "Announcement Information", username, role, ad, user);
             }
         });
-
     }
 
     public void getUser(User user) {
@@ -97,5 +106,9 @@ public class ContractantAdsController extends Controller implements Initializabl
 
     public void setLabel() {
         label_name.setText(user.getName() + "'s Announcements");
+    }
+
+    public void setButton_request() {
+        button_request.setText("SEND REQUEST FOR " + user.getName());
     }
 }

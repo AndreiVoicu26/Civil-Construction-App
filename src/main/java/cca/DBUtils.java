@@ -228,6 +228,49 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+    public static void changeScene11(ActionEvent event, String fxmlFile, String title, String username, String role, User user) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            CustomerRequestController requestController = loader.getController();
+            requestController.getUser(user);
+            requestController.getLabel();
+            requestController.getSource(1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+    public static void changeScene12(ActionEvent event, String fxmlFile, String title, String username, String role, User user, Announcement ad) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            CustomerRequestController requestController = loader.getController();
+            requestController.getUser(user);
+            requestController.getLabel();
+            requestController.getAd(ad);
+            requestController.getSource(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
     public static void changePassword(ActionEvent event, String username, String role, String oldPassword, String newPassword) {
         Connection connection = null;
         PreparedStatement psCheckPassword = null;
@@ -954,6 +997,7 @@ public class DBUtils {
             listController.loadData(announcementArrayList);
             listController.getUser(user);
             listController.setLabel();
+            listController.setButton_request();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1310,6 +1354,78 @@ public class DBUtils {
         stage.setTitle(title);
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
+    }
+    public static void sendRequest(String username, String role, User user, String request) {
+        Connection connection = null;
+        PreparedStatement psInsert = null;
+        PreparedStatement psCheckRequestExists = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            psCheckRequestExists = connection.prepareStatement("SELECT * FROM requests WHERE contractant = ? AND customer = ? AND status = ?");
+            psCheckRequestExists.setString(1, user.getUsername());
+            psCheckRequestExists.setString(2, username);
+            psCheckRequestExists.setString(3, "pending");
+            resultSet = psCheckRequestExists.executeQuery();
+
+            if (resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Request already sent! Wait for a response from " + user.getName() + "!");
+                alert.show();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText("Are you sure you want to send request to " + user.getName() + "?");
+                alert.showAndWait();
+                if(alert.getResult() == ButtonType.OK) {
+                    psInsert = connection.prepareStatement("INSERT INTO requests (contractant, customer, request, status) VALUES (?, ?, ?, ?)");
+                    psInsert.setString(1, user.getUsername());
+                    psInsert.setString(2, username);
+                    psInsert.setString(3, request);
+                    psInsert.setString(4, "pending");
+                    psInsert.executeUpdate();
+
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setHeaderText("Request was sent to " + user.getName() + "!");
+                    alert2.showAndWait();
+                } else {
+                    alert.close();
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (psCheckRequestExists != null) {
+                try {
+                    psCheckRequestExists.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (psInsert != null) {
+                try {
+                    psInsert.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
     public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
         /* MessageDigest instance for hashing using SHA512*/

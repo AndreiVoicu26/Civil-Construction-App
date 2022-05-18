@@ -60,6 +60,13 @@ public class ContractantDetailsController extends Controller implements Initiali
             }
         });
 
+        button_request.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene12(event, "customer-request.fxml", "Send Request", username, role, contractant, ad);
+            }
+        });
+
     }
 
     public void getAd(Announcement ad) {
@@ -74,4 +81,7 @@ public class ContractantDetailsController extends Controller implements Initiali
         label_address.setText("Address: " + contractant.getAddress());
     }
 
+    public void setButton_request() {
+        button_request.setText("SEND REQUEST FOR " + contractant.getName());
+    };
 }

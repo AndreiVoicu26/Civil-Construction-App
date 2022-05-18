@@ -8,7 +8,7 @@
     <top>
         <AnchorPane prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #FF7F50;" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="label_name" alignment="CENTER" layoutX="117.0" layoutY="15.0" prefHeight="36.0" prefWidth="456.0" text=" ">
+                <Label fx:id="label_name" alignment="CENTER" layoutX="117.0" layoutY="15.0" prefHeight="36.0" prefWidth="365.0" text=" ">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="20.0" />
                     </font>
@@ -40,7 +40,12 @@
     <center>
         <AnchorPane prefHeight="270.0" prefWidth="508.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
             <children>
-                <ListView fx:id="announcementListView" layoutY="-1.0" prefHeight="285.0" prefWidth="600.0" style="-fx-background-color: #FFE4B5;" />
+                <ListView fx:id="announcementListView" layoutY="34.0" prefHeight="255.0" prefWidth="600.0" style="-fx-background-color: #FFE4B5;" />
+                <Button fx:id="button_request" layoutY="-4.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="600.0" style="-fx-cursor: hand;" text="SEND REQUEST TO">
+                    <font>
+                        <Font name="Arial Rounded MT Bold" size="20.0" />
+                    </font>
+                </Button>
             </children></AnchorPane>
     </center>
 </BorderPane>
