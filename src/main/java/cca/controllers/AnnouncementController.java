@@ -29,7 +29,7 @@ public class AnnouncementController extends Controller implements Initializable 
     @FXML
     private TextField tf_service;
     @FXML
-    private TextField tf_description;
+    private TextArea tf_description;
     @FXML
     private TextField tf_location;
     @FXML
@@ -75,7 +75,7 @@ public class AnnouncementController extends Controller implements Initializable 
             }
         });
 
-        choice_service.getItems().addAll("Service 1", "Service 2", "Service 3", "Other option");
+        choice_service.getItems().addAll("Electrical Installation", "Sanitary Installation", "Roof Construction", "Foundation Casting", "Bricklaying", "Yard Paving", "Other option");
 
         choice_service.setOnAction(new EventHandler<ActionEvent>() {
             @Override

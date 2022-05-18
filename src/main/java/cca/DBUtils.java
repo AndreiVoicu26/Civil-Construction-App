@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -148,6 +149,234 @@ public class DBUtils {
         stage.show();
     }
 
+
+    public static void changeScene7(ActionEvent event, String fxmlFile, String title, String username, String role, User user) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            UserEditController userEditController = loader.getController();
+            userEditController.getUser(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
+    public static void changeScene8(ActionEvent event, String fxmlFile, String title, String username, String role, User user) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AccountInfoController accountInfoController = loader.getController();
+            accountInfoController.getUser(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+    public static void changeScene9(MouseEvent event, String fxmlFile, String title, String username, String role, Announcement ad, User user) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdDetailsClientController adController = loader.getController();
+            adController.displayAnnouncement(ad);
+            adController.getUser(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+    public static void changeScene10(Event event, String fxmlFile, String title, String username, String role, Announcement ad) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdDetailsCustomerController adController = loader.getController();
+            adController.displayAnnouncement(ad);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+    public static void changeScene11(ActionEvent event, String fxmlFile, String title, String username, String role, User user) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            CustomerRequestController requestController = loader.getController();
+            requestController.getUser(user);
+            requestController.getLabel();
+            requestController.getSource(1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+    public static void changeScene12(ActionEvent event, String fxmlFile, String title, String username, String role, User user, Announcement ad) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            CustomerRequestController requestController = loader.getController();
+            requestController.getUser(user);
+            requestController.getLabel();
+            requestController.getAd(ad);
+            requestController.getSource(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+    public static void changeScene13(MouseEvent event, String fxmlFile, String title, String username, String role, Request request) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            RequestDetailsController requestController = loader.getController();
+            requestController.getRequest(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+    public static void changePassword(ActionEvent event, String username, String role, String oldPassword, String newPassword) {
+        Connection connection = null;
+        PreparedStatement psCheckPassword = null;
+        PreparedStatement psUpdatePassword = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            psCheckPassword = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+            psCheckPassword.setString(1, username);
+            resultSet = psCheckPassword.executeQuery();
+
+            while(resultSet.next()) {
+                String retrievedPassword = resultSet.getString("password");
+                if(!toHexString(getSHA(oldPassword)).equals(retrievedPassword)) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Password incorrect!");
+                    alert.show();
+                } else {
+                    if(newPassword.length() < 6) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Password must have minimum 6 characters");
+                        alert.show();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setHeaderText("Are you sure you want to change password?");
+                        alert.showAndWait();
+                        if (alert.getResult() == ButtonType.OK) {
+                            psUpdatePassword = connection.prepareStatement("UPDATE users SET password = ? WHERE username = ?");
+                            psUpdatePassword.setString(1, toHexString(getSHA(newPassword)));
+                            psUpdatePassword.setString(2, username);
+                            psUpdatePassword.executeUpdate();
+
+                            Parent root = null;
+
+                            try {
+                                FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource("log-in.fxml"));
+                                root = loader.load();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            stage.setTitle("Log In");
+                            stage.setScene(new Scene(root, 600, 400));
+                            stage.show();
+                        } else {
+                            alert.close();
+                        }
+                    }
+                }
+            }
+        } catch (SQLException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (psCheckPassword != null) {
+                try {
+                    psCheckPassword.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (psUpdatePassword != null) {
+                try {
+                    psUpdatePassword.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
     public static void addCard(ActionEvent event, String fxmlFile, String title, String username, String role, Card card, Announcement ad) {
         Connection connection = null;
         PreparedStatement psInsert = null;
@@ -252,6 +481,73 @@ public class DBUtils {
         stage.show();
     }
 
+    public static void takeInfo(ActionEvent event, String fxmlFile, String title, String username, String role) {
+        User user = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+
+            while(resultSet.next()) {
+                String retrievedName = resultSet.getString("fullname");
+                String retrievedEmail = resultSet.getString("email");
+                String retrievedPhone = resultSet.getString("phone");
+                String retrievedAddress = resultSet.getString("address");
+                user = new User(retrievedName, retrievedEmail, retrievedPhone, retrievedAddress);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AccountInfoController infoController = loader.getController();
+            infoController.getUser(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
     public static void signUpUser(ActionEvent event, String username, String password, String role, String fullName, String email, String phone, String address) {
         Connection connection = null;
         PreparedStatement psInsert = null;
@@ -291,6 +587,8 @@ public class DBUtils {
 
                         if(role.equals("Contractant")) {
                             changeScene(event, "home-contractant.fxml", "Home", username, role);
+                        }else {
+                            changeScene(event, "home-customer.fxml", "Home", username, role );
                         }
                     }
                 }
@@ -350,6 +648,8 @@ public class DBUtils {
                     if(retrievedPassword.equals(toHexString(getSHA(password)))) {
                         if(retrievedRole.equals("Contractant")) {
                             changeScene(event, "home-contractant.fxml", "Home", username, retrievedRole);
+                        } else {
+                            changeScene(event, "home-customer.fxml", "Home", username, retrievedRole);
                         }
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -437,6 +737,41 @@ public class DBUtils {
         stage.setTitle("Home");
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
+    }
+
+    public static void updateUser(ActionEvent event, String username, String role, User user) {
+        Connection connection = null;
+        PreparedStatement psUpdate = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            psUpdate = connection.prepareStatement("UPDATE users SET fullname = ?, email = ?, phone = ?, address = ? WHERE username = ?");
+            psUpdate.setString(1,user.getName());
+            psUpdate.setString(2,user.getEmail());
+            psUpdate.setString(3,user.getPhone());
+            psUpdate.setString(4,user.getAddress());
+            psUpdate.setString(5,username);
+            psUpdate.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (psUpdate != null) {
+                try {
+                    psUpdate.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        DBUtils.takeInfo(event, "account-info.fxml", "Info", username, role);
     }
 
     public static void updateAnnouncement(ActionEvent event, String username, String role, Announcement ad) {
@@ -613,7 +948,591 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+    public static void takeContractantsAds(Event event, String fxmlFile, String title, String username, String role, User user) {
+        ArrayList<Announcement> announcementArrayList = new ArrayList<Announcement>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM announcements WHERE username = ?");
+            preparedStatement.setString(1,user.getUsername());
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(user.getName() + " has no announcements published!");
+                alert.show();
+                return;
+            } else {
+                while(resultSet.next()) {
+                    String retrievedTitle = resultSet.getString("title");
+                    String retrievedService = resultSet.getString("service");
+                    String retrievedDescription = resultSet.getString("description");
+                    String retrievedLocation = resultSet.getString("location");
+                    String retrievedPayment = resultSet.getString("payment");
+                    int retrievedID = resultSet.getInt("announcement_id");
+                    int retrievedPromoted = resultSet.getInt("promoted");
+                    announcementArrayList.add(new Announcement(retrievedTitle, retrievedService, retrievedDescription, retrievedLocation, retrievedPayment, retrievedID, retrievedPromoted));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            ContractantAdsController listController = loader.getController();
+            listController.loadData(announcementArrayList);
+            listController.getUser(user);
+            listController.setLabel();
+            listController.setButton_request();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+
+    public static void takeAdsCustomer(ActionEvent event, String fxmlFile, String title, String username, String role) {
+        ArrayList<Announcement> announcementArrayList = new ArrayList<Announcement>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM announcements");
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(username + "no announcements published!");
+                alert.show();
+                return;
+            } else {
+                while(resultSet.next()) {
+                    String retrievedTitle = resultSet.getString("title");
+                    String retrievedService = resultSet.getString("service");
+                    String retrievedDescription = resultSet.getString("description");
+                    String retrievedLocation = resultSet.getString("location");
+                    String retrievedPayment = resultSet.getString("payment");
+                    int retrievedID = resultSet.getInt("announcement_id");
+                    int retrievedPromoted = resultSet.getInt("promoted");
+                    announcementArrayList.add(new Announcement(retrievedTitle, retrievedService, retrievedDescription, retrievedLocation, retrievedPayment, retrievedID, retrievedPromoted));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdsListCustomerController listController = loader.getController();
+            listController.loadData(announcementArrayList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+    public static void takeContractants(ActionEvent event, String fxmlFile, String title, String username, String role) {
+        ArrayList<User> contractantsArrayList = new ArrayList<User>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE role = ?");
+            preparedStatement.setString(1, "Contractant");
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("No contractants found");
+                alert.show();
+                return;
+            } else {
+                while(resultSet.next()) {
+                    String retrievedName = resultSet.getString("fullname");
+                    String retrievedEmail = resultSet.getString("email");
+                    String retrievedPhone = resultSet.getString("phone");
+                    String retrievedAddress = resultSet.getString("address");
+                    String retrievedUsername = resultSet.getString("username");
+                    //int retrievedID = resultSet.getInt("announcement_id");
+                    contractantsArrayList.add(new User(retrievedName, retrievedEmail, retrievedPhone, retrievedAddress, retrievedUsername));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            ContractantsListController listController = loader.getController();
+            listController.loadData(contractantsArrayList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+
+    }
+
+    public static ArrayList<User> takeContractantsWithSpecificService(String Service) {
+        ArrayList<User> contractantsArrayList = new ArrayList<User>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        ResultSet resultSet = null;
+        ResultSet resultSet2 = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM announcements WHERE service = ?");
+            preparedStatement.setString(1, Service);
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                String retrievedUsername = resultSet.getString("username");
+                preparedStatement2 = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+                preparedStatement2.setString(1, retrievedUsername);
+                resultSet2 = preparedStatement2.executeQuery();
+
+                while(resultSet2.next()) {
+                    String retrievedName = resultSet2.getString("fullname");
+                    String retrievedEmail = resultSet2.getString("email");
+                    String retrievedPhone = resultSet2.getString("phone");
+                    String retrievedAddress = resultSet2.getString("address");
+                    contractantsArrayList.add(new User(retrievedName, retrievedEmail, retrievedPhone, retrievedAddress, retrievedUsername));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return contractantsArrayList;
+    }
+    public static ArrayList<Announcement> takeAnnouncementsWithSpecificService(String Service) {
+        ArrayList<Announcement> adsArrayList = new ArrayList<Announcement>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM announcements WHERE service = ?");
+            preparedStatement.setString(1, Service);
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                String retrievedTitle = resultSet.getString("title");
+                String retrievedService = resultSet.getString("service");
+                String retrievedDescription = resultSet.getString("description");
+                String retrievedLocation = resultSet.getString("location");
+                String retrievedPayment = resultSet.getString("payment");
+                int retrievedID = resultSet.getInt("announcement_id");
+                int retrievedPromoted = resultSet.getInt("promoted");
+                adsArrayList.add(new Announcement(retrievedTitle, retrievedService, retrievedDescription, retrievedLocation, retrievedPayment, retrievedID, retrievedPromoted));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return adsArrayList;
+    }
+    public static void takeContractantInfo(ActionEvent event, String fxmlFile, String title, String username, String role, Announcement ad) {
+        User contractant = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        ResultSet resultSet = null;
+        ResultSet resultSet2 = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM announcements WHERE announcement_id = ?");
+            preparedStatement.setInt(1, ad.getID());
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                String retrievedUsername = resultSet.getString("username");
+                preparedStatement2 = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+                preparedStatement2.setString(1,retrievedUsername);
+                resultSet2 = preparedStatement2.executeQuery();
+
+                while(resultSet2.next()) {
+                    String retrievedName = resultSet2.getString("fullname");
+                    String retrievedEmail = resultSet2.getString("email");
+                    String retrievedPhone = resultSet2.getString("phone");
+                    String retrievedAddress = resultSet2.getString("address");
+                    contractant = new User(retrievedName, retrievedEmail, retrievedPhone, retrievedAddress, retrievedUsername);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet2 != null) {
+                try {
+                    resultSet2.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement2 != null) {
+                try {
+                    preparedStatement2.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            ContractantDetailsController detailsController = loader.getController();
+            detailsController.getContractant(contractant);
+            detailsController.getAd(ad);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
+    public static void sendRequest(String username, String role, User user, String request) {
+        Connection connection = null;
+        PreparedStatement psInsert = null;
+        PreparedStatement psCheckRequestExists = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            psCheckRequestExists = connection.prepareStatement("SELECT * FROM requests WHERE contractant = ? AND customer = ? AND status = ?");
+            psCheckRequestExists.setString(1, user.getUsername());
+            psCheckRequestExists.setString(2, username);
+            psCheckRequestExists.setString(3, "pending");
+            resultSet = psCheckRequestExists.executeQuery();
+
+            if (resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Request already sent! Wait for a response from " + user.getName() + "!");
+                alert.show();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText("Are you sure you want to send request to " + user.getName() + "?");
+                alert.showAndWait();
+                if(alert.getResult() == ButtonType.OK) {
+                    psInsert = connection.prepareStatement("INSERT INTO requests (contractant, customer, request, status) VALUES (?, ?, ?, ?)");
+                    psInsert.setString(1, user.getUsername());
+                    psInsert.setString(2, username);
+                    psInsert.setString(3, request);
+                    psInsert.setString(4, "pending");
+                    psInsert.executeUpdate();
+
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setHeaderText("Request was sent to " + user.getName() + "!");
+                    alert2.showAndWait();
+                } else {
+                    alert.close();
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (psCheckRequestExists != null) {
+                try {
+                    psCheckRequestExists.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (psInsert != null) {
+                try {
+                    psInsert.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    public static void takeRequests(ActionEvent event, String fxmlFile, String title, String username, String role) {
+        ArrayList<Request> requestArrayList = new ArrayList<Request>();
+        User contractant = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        ResultSet resultSet = null;
+        ResultSet resultSet2 = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM requests WHERE customer = ?");
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("You have no requests for contractants!");
+                alert.show();
+                return;
+            } else {
+                while(resultSet.next()) {
+                    String retrievedContractant = resultSet.getString("contractant");
+                    String retrievedRequest = resultSet.getString("request");
+                    String retrievedStatus = resultSet.getString("status");
+                    String retrievedResponse = resultSet.getString("response");
+
+                    preparedStatement2 = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+                    preparedStatement2.setString(1, retrievedContractant);
+                    resultSet2 = preparedStatement2.executeQuery();
+
+                    while(resultSet2.next()) {
+                        String retrievedName = resultSet2.getString("fullname");
+                        String retrievedEmail = resultSet2.getString("email");
+                        String retrievedPhone = resultSet2.getString("phone");
+                        String retrievedAddress = resultSet2.getString("address");
+                        contractant = new User(retrievedName, retrievedEmail, retrievedPhone, retrievedAddress, retrievedContractant);
+                    }
+                    requestArrayList.add(new Request(contractant, retrievedRequest, retrievedStatus, retrievedResponse));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            RequestsListController listController = loader.getController();
+            listController.loadData(requestArrayList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
     public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
         /* MessageDigest instance for hashing using SHA512*/
         MessageDigest md = MessageDigest.getInstance("SHA-512");
@@ -637,6 +1556,7 @@ public class DBUtils {
 
         return hexString.toString();
     }
+
 
 
 }

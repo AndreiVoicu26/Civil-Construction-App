@@ -68,7 +68,6 @@
                         <Font name="Arial" size="20.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tf_description" layoutX="232.0" layoutY="134.0" prefHeight="67.0" prefWidth="200.0" />
                 <Label layoutX="42.0" layoutY="212.0" prefHeight="23.0" prefWidth="143.0" text="Location">
                     <font>
                         <Font name="Arial" size="20.0" />
@@ -91,6 +90,7 @@
                   <Font name="Arial" size="20.0" />
                </font>
             </CheckBox>
+            <TextArea fx:id="tf_description" layoutX="232.0" layoutY="134.0" prefHeight="70.0" prefWidth="200.0" />
             </children></AnchorPane>
     </center>
 </BorderPane>

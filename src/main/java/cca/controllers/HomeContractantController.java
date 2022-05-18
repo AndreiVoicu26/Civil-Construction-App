@@ -24,6 +24,8 @@ public class HomeContractantController extends Controller implements Initializab
     private Button button_adslist;
     @FXML
     private Button button_clientslist;
+    @FXML
+    private Button button_info;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,6 +62,13 @@ public class HomeContractantController extends Controller implements Initializab
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "clients-list.fxml", "Customers List", username, role);
+            }
+        });
+
+        button_info.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.takeInfo(event, "account-info.fxml", "Info", username, role);
             }
         });
 
