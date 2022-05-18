@@ -75,6 +75,12 @@ public class AdsListCustomerController extends Controller implements Initializab
             }
 
         });
-
+        adsListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Announcement ad = adsListView.getSelectionModel().getSelectedItem();
+                DBUtils.changeScene10(event, "ad-details-customer.fxml","Announcement Information",username, role, ad);
+            }
+        });
     }
 }

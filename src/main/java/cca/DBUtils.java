@@ -168,6 +168,25 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+    public static void changeScene10(MouseEvent event, String fxmlFile, String title, String username, String role, Announcement ad) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            AdDetailsCustomerController adController = loader.getController();
+            adController.displayAnnouncement(ad);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
 
     public static void changeScene7(ActionEvent event, String fxmlFile, String title, String username, String role, User user) {
         Parent root = null;
