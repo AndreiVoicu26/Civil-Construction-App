@@ -40,12 +40,17 @@
     <center>
         <AnchorPane prefHeight="270.0" prefWidth="508.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="button_announcements" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="89.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="220.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="ANNOUNCEMENTS" textAlignment="CENTER">
+                <Button fx:id="button_announcements" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="220.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="ANNOUNCEMENTS" textAlignment="CENTER">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="20.0" />
                     </font>
                 </Button>
-                <Button fx:id="button_contractants" alignment="CENTER" contentDisplay="CENTER" layoutX="366.0" layoutY="89.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="220.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="CONTRACTANTS" textAlignment="CENTER">
+                <Button fx:id="button_contractants" alignment="CENTER" contentDisplay="CENTER" layoutX="366.0" layoutY="44.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="220.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="CONTRACTANTS" textAlignment="CENTER">
+                    <font>
+                        <Font name="Arial Rounded MT Bold" size="20.0" />
+                    </font>
+                </Button>
+                <Button fx:id="button_requests" alignment="CENTER" contentDisplay="CENTER" layoutX="190.0" layoutY="165.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="220.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="REQUESTS" textAlignment="CENTER">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="20.0" />
                     </font>

@@ -271,6 +271,25 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+    public static void changeScene13(MouseEvent event, String fxmlFile, String title, String username, String role, Request request) {
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            RequestDetailsController requestController = loader.getController();
+            requestController.getRequest(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
+    }
     public static void changePassword(ActionEvent event, String username, String role, String oldPassword, String newPassword) {
         Connection connection = null;
         PreparedStatement psCheckPassword = null;
@@ -1426,6 +1445,93 @@ public class DBUtils {
                 }
             }
         }
+    }
+    public static void takeRequests(ActionEvent event, String fxmlFile, String title, String username, String role) {
+        ArrayList<Request> requestArrayList = new ArrayList<Request>();
+        User contractant = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        ResultSet resultSet = null;
+        ResultSet resultSet2 = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/civil-construction-app", "root", "toor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM requests WHERE customer = ?");
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("You have no requests for contractants!");
+                alert.show();
+                return;
+            } else {
+                while(resultSet.next()) {
+                    String retrievedContractant = resultSet.getString("contractant");
+                    String retrievedRequest = resultSet.getString("request");
+                    String retrievedStatus = resultSet.getString("status");
+                    String retrievedResponse = resultSet.getString("response");
+
+                    preparedStatement2 = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+                    preparedStatement2.setString(1, retrievedContractant);
+                    resultSet2 = preparedStatement2.executeQuery();
+
+                    while(resultSet2.next()) {
+                        String retrievedName = resultSet2.getString("fullname");
+                        String retrievedEmail = resultSet2.getString("email");
+                        String retrievedPhone = resultSet2.getString("phone");
+                        String retrievedAddress = resultSet2.getString("address");
+                        contractant = new User(retrievedName, retrievedEmail, retrievedPhone, retrievedAddress, retrievedContractant);
+                    }
+                    requestArrayList.add(new Request(contractant, retrievedRequest, retrievedStatus, retrievedResponse));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        Parent root = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            root = loader.load();
+            Controller homeController = loader.getController();
+            homeController.setUserInformation(username, role);
+            homeController.saveUserInformation(username, role);
+            RequestsListController listController = loader.getController();
+            listController.loadData(requestArrayList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 600, 400));
+        stage.show();
     }
     public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
         /* MessageDigest instance for hashing using SHA512*/
