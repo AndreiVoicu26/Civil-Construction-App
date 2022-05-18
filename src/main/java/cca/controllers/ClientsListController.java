@@ -1,15 +1,22 @@
 package cca.controllers;
 
+import cca.Announcement;
 import cca.DBUtils;
+import cca.Request;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class ClientsListController extends Controller implements Initializable {
@@ -18,6 +25,11 @@ public class ClientsListController extends Controller implements Initializable {
     private Button button_back;
     @FXML
     private Button button_logout;
+
+    @FXML
+    private ListView<Request> requestListView;
+
+    private ObservableList<Request> requestObservableList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -43,5 +55,30 @@ public class ClientsListController extends Controller implements Initializable {
             }
         });
 
+    }
+
+    public void loadData(ArrayList<Request> requestsList) {
+        requestObservableList.removeAll();
+        requestObservableList.addAll(requestsList);
+        requestListView.getItems().addAll(requestObservableList);
+
+        requestListView.setCellFactory(announcementListView1 -> new ListCell<Request>() {
+            public void updateItem(Request request, boolean empty) {
+                super.updateItem(request, empty);
+                if(empty) {
+                    setText(null);
+                } else {
+                    setText("Sent from: " + request.getUser().getName() + "\nStatus: " + request.getStatus());
+                }
+            }
+
+        });
+        requestListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Request request = requestListView.getSelectionModel().getSelectedItem();
+                DBUtils.changeScene14(event, "request-review.fxml", "Request review", username, role, request);
+            }
+        });
     }
 }
