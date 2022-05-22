@@ -89,13 +89,20 @@ public class AdEditController extends Controller implements Initializable {
         button_promote.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(!tf_title.getText().trim().isEmpty() && !tf_description.getText().trim().isEmpty() && !tf_location.getText().trim().isEmpty() && !tf_payment.getText().trim().isEmpty()
-                        && choice_service.getValue() != null && (!choice_service.getValue().equals("Other option") || (choice_service.getValue().equals("Other option") && !tf_service.getText().trim().isEmpty()))) {
-                    DBUtils.changeScene4(event, "promote-ad.fxml", "Promote Announcement", username, role, ad, fxmlSource);
-                } else {
+
+                if(promoted == 1) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("All fields are required!");
+                    alert.setContentText("The announcement is already promoted!");
                     alert.show();
+                } else {
+                    if(!tf_title.getText().trim().isEmpty() && !tf_description.getText().trim().isEmpty() && !tf_location.getText().trim().isEmpty() && !tf_payment.getText().trim().isEmpty()
+                            && choice_service.getValue() != null && (!choice_service.getValue().equals("Other option") || (choice_service.getValue().equals("Other option") && !tf_service.getText().trim().isEmpty()))) {
+                        DBUtils.changeScene4(event, "promote-ad.fxml", "Promote Announcement", username, role, ad, fxmlSource);
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("All fields are required!");
+                        alert.show();
+                    }
                 }
             }
         });
@@ -137,6 +144,11 @@ public class AdEditController extends Controller implements Initializable {
     public void getPromotion() {
         promoted = 1;
         checkbox_promoted.setSelected(true);
+    }
+
+    public void verifyPromotion(int promotion) {
+        promoted = promotion;
+        checkbox_promoted.setSelected(promotion == 1);
     }
 
     public void getAnnouncement(Announcement ad) {

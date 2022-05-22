@@ -80,6 +80,7 @@ public class DBUtils {
             homeController.saveUserInformation(username, role);
             AdEditController adController = loader.getController();
             adController.getAnnouncement(ad);
+            adController.verifyPromotion(ad.getPromoted());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -7,10 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,15 +15,15 @@ import java.util.ResourceBundle;
 public class AdDetailsClientController extends Controller implements Initializable {
 
     @FXML
-    private Label label_title;
+    private TextField tf_title;
     @FXML
-    private Label label_service;
+    private TextField tf_service;
     @FXML
-    private Label label_description;
+    private TextArea tf_description;
     @FXML
-    private Label label_location;
+    private TextField tf_location;
     @FXML
-    private Label label_payment;
+    private TextField tf_payment;
 
     @FXML
     private Button button_back;
@@ -64,11 +61,11 @@ public class AdDetailsClientController extends Controller implements Initializab
 
     public void displayAnnouncement(Announcement ad){
         this.ad = ad;
-        label_title.setText(ad.getTitle());
-        label_service.setText(ad.getService());
-        label_description.setText(ad.getDescription());
-        label_location.setText(ad.getLocation());
-        label_payment.setText(ad.getPayment());
+        tf_title.setText(ad.getTitle());
+        tf_service.setText(ad.getService());
+        tf_description.setText(ad.getDescription());
+        tf_location.setText(ad.getLocation());
+        tf_payment.setText(ad.getPayment());
     }
 
     public void getUser(User user) {

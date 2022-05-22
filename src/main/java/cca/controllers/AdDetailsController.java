@@ -14,15 +14,15 @@ import java.util.ResourceBundle;
 public class AdDetailsController extends Controller implements Initializable {
 
     @FXML
-    private Label label_title;
+    private TextField tf_title;
     @FXML
-    private Label label_service;
+    private TextField tf_service;
     @FXML
-    private Label label_description;
+    private TextArea tf_description;
     @FXML
-    private Label label_location;
+    private TextField tf_location;
     @FXML
-    private Label label_payment;
+    private TextField tf_payment;
 
     @FXML
     private Button button_back;
@@ -88,10 +88,10 @@ public class AdDetailsController extends Controller implements Initializable {
 
     public void displayAnnouncement(Announcement ad){
         this.ad = ad;
-        label_title.setText(ad.getTitle());
-        label_service.setText(ad.getService());
-        label_description.setText(ad.getDescription());
-        label_location.setText(ad.getLocation());
-        label_payment.setText(ad.getPayment());
+        tf_title.setText(ad.getTitle());
+        tf_service.setText(ad.getService());
+        tf_description.setText(ad.getDescription());
+        tf_location.setText(ad.getLocation());
+        tf_payment.setText(ad.getPayment());
     }
 }

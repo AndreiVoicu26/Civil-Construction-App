@@ -7,99 +7,102 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cca.controllers.SignUpController">
    <children>
-      <AnchorPane prefHeight="421.0" prefWidth="617.0" style="-fx-background-color: #CD853F;">
+      <AnchorPane prefHeight="421.0" prefWidth="617.0" style="-fx-background-color: #C0C0C0;">
          <children>
-            <ImageView blendMode="DARKEN" fitHeight="179.0" fitWidth="174.0" layoutX="14.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView blendMode="DARKEN" fitHeight="179.0" fitWidth="174.0" layoutX="10.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@registerlogo.jpg" />
                </image>
             </ImageView>
-            <Label layoutX="199.0" layoutY="70.0" prefHeight="23.0" prefWidth="148.0" text="Full Name">
+            <Label layoutX="185.0" layoutY="50.0" prefHeight="30.0" prefWidth="120.0" text="Full Name">
                <font>
-                  <Font name="Inter Regular" size="20.0" />
+                  <Font name="Arial" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="199.0" layoutY="106.0" prefHeight="23.0" prefWidth="148.0" text="E-mail">
+            <Label layoutX="185.0" layoutY="90.0" prefHeight="30.0" prefWidth="120.0" text="E-mail">
                <font>
-                  <Font name="Inter Regular" size="20.0" />
+                  <Font name="Arial" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="199.0" layoutY="31.0" text="Contact Information:">
+            <Label layoutX="170.0" layoutY="14.0" prefHeight="30.0" prefWidth="405.0" text="COMPLETE YOUR PROFILE AND SIGN UP">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="20.0" />
+                  <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="199.0" layoutY="143.0" prefHeight="23.0" prefWidth="148.0" text="Phone number">
+            <Label layoutX="185.0" layoutY="130.0" prefHeight="30.0" prefWidth="120.0" text="Phone">
                <font>
-                  <Font name="Inter Regular" size="20.0" />
+                  <Font name="Arial" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="199.0" layoutY="181.0" prefHeight="23.0" prefWidth="148.0" text="Address">
+            <Label layoutX="185.0" layoutY="170.0" prefHeight="30.0" prefWidth="120.0" text="Address">
                <font>
-                  <Font name="Inter Regular" size="20.0" />
+                  <Font name="Arial" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="tf_fullname" layoutX="364.0" layoutY="69.0" prefHeight="26.0" prefWidth="201.0">
+            <TextField fx:id="tf_fullname" layoutX="310.0" layoutY="50.0" prefHeight="30.0" prefWidth="250.0">
                <font>
                   <Font size="15.0" />
                </font></TextField>
-            <TextField fx:id="tf_email" layoutX="364.0" layoutY="105.0" prefHeight="26.0" prefWidth="201.0">
+            <TextField fx:id="tf_email" layoutX="310.0" layoutY="90.0" prefHeight="30.0" prefWidth="250.0">
                <font>
                   <Font size="15.0" />
                </font></TextField>
-            <TextField fx:id="tf_phone" layoutX="364.0" layoutY="142.0" prefHeight="26.0" prefWidth="201.0">
+            <TextField fx:id="tf_phone" layoutX="310.0" layoutY="130.0" prefHeight="30.0" prefWidth="250.0">
                <font>
                   <Font size="15.0" />
                </font></TextField>
-            <TextField fx:id="tf_address" layoutX="364.0" layoutY="179.0" prefHeight="26.0" prefWidth="201.0">
+            <TextField fx:id="tf_address" layoutX="310.0" layoutY="170.0" prefHeight="30.0" prefWidth="250.0">
                <font>
                   <Font size="15.0" />
                </font></TextField>
-            <Label layoutX="199.0" layoutY="229.0" prefHeight="30.0" prefWidth="148.0" text="Username">
+            <Label layoutX="185.0" layoutY="210.0" prefHeight="30.0" prefWidth="120.0" text="Username">
                <font>
-                  <Font name="Inter Regular" size="20.0" />
+                  <Font name="Arial" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="199.0" layoutY="274.0" prefHeight="23.0" prefWidth="130.0" text="Password">
+            <Label layoutX="185.0" layoutY="250.0" prefHeight="30.0" prefWidth="120.0" text="Password">
                <font>
-                  <Font name="Inter Regular" size="20.0" />
+                  <Font name="Arial" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="199.0" layoutY="322.0" prefHeight="30.0" prefWidth="130.0" text="Choose Role">
+            <Label layoutX="185.0" layoutY="290.0" prefHeight="30.0" prefWidth="120.0" text="Role">
                <font>
-                  <Font name="Inter Regular" size="20.0" />
+                  <Font name="Arial" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="tf_username" layoutX="363.0" layoutY="229.0" prefHeight="26.0" prefWidth="202.0">
+            <TextField fx:id="tf_username" layoutX="310.0" layoutY="210.0" prefHeight="30.0" prefWidth="250.0">
                <font>
                   <Font size="15.0" />
                </font></TextField>
-            <Button fx:id="button_signup" alignment="CENTER" contentDisplay="CENTER" layoutX="37.0" layoutY="251.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="122.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="Create &#10;account" textAlignment="CENTER">
+            <Button fx:id="button_signup" alignment="CENTER" contentDisplay="CENTER" layoutX="185.0" layoutY="325.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="375.0" style="-fx-background-color: #708090; -fx-cursor: hand; -fx-background-radius: 15;" text="Register" textAlignment="CENTER">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
                </font>
             </Button>
-            <Label layoutX="14.0" layoutY="362.0" prefHeight="23.0" prefWidth="185.0" text="Already have an account?">
+            <Label layoutX="250.0" layoutY="365.0" prefHeight="30.0" prefWidth="180.0" text="Already have an account?">
                <font>
-                  <Font name="Inter Regular" size="15.0" />
+                  <Font name="Arial" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="button_log_in" layoutX="194.0" layoutY="358.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="78.0" style="-fx-background-color: TRANSPARENT; -fx-cursor: hand;" text="LOG IN" textFill="#2e0ab1" underline="true">
+            <Button fx:id="button_log_in" layoutX="420.0" layoutY="365.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: TRANSPARENT; -fx-cursor: hand;" text="SIGN IN" textFill="#17097e" underline="true">
                <font>
                   <Font name="Arial Rounded MT Bold" size="15.0" />
                </font>
             </Button>
-            <RadioButton fx:id="rb_customer" layoutX="363.0" layoutY="317.0" mnemonicParsing="false" text="Customer">
+            <RadioButton fx:id="rb_customer" layoutX="310.0" layoutY="290.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" text="Customer">
                <font>
-                  <Font name="Inter Regular" size="15.0" />
+                  <Font name="Arial" size="18.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="rb_contractant" layoutX="363.0" layoutY="352.0" mnemonicParsing="false" text="Contractant">
+            <RadioButton fx:id="rb_contractant" layoutX="430.0" layoutY="290.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" text="Contractant">
                <font>
-                  <Font name="Inter Regular" size="15.0" />
+                  <Font name="Arial" size="18.0" />
                </font>
             </RadioButton>
-            <PasswordField fx:id="tf_password" layoutX="363.0" layoutY="271.0" prefHeight="31.0" prefWidth="202.0" />
+            <PasswordField fx:id="tf_password" layoutX="310.0" layoutY="250.0" prefHeight="30.0" prefWidth="250.0">
+               <font>
+                  <Font size="15.0" />
+               </font></PasswordField>
 
          </children></AnchorPane>
       

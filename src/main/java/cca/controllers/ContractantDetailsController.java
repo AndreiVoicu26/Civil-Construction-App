@@ -7,10 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,13 +22,13 @@ public class ContractantDetailsController extends Controller implements Initiali
     private Button button_request;
 
     @FXML
-    private Label label_name;
+    private TextField tf_name;
     @FXML
-    private Label label_email;
+    private TextField tf_email;
     @FXML
-    private Label label_phone;
+    private TextField tf_phone;
     @FXML
-    private Label label_address;
+    private TextField tf_address;
 
     private Announcement ad;
 
@@ -75,10 +72,10 @@ public class ContractantDetailsController extends Controller implements Initiali
 
     public void getContractant(User contractant) {
         this.contractant = contractant;
-        label_name.setText("Name: " + contractant.getName());
-        label_email.setText("Email: " + contractant.getEmail());
-        label_phone.setText("Phone: " + contractant.getPhone());
-        label_address.setText("Address: " + contractant.getAddress());
+        tf_name.setText(contractant.getName());
+        tf_email.setText(contractant.getEmail());
+        tf_phone.setText(contractant.getPhone());
+        tf_address.setText(contractant.getAddress());
     }
 
     public void setButton_request() {
