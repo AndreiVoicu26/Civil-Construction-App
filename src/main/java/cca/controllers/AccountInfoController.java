@@ -6,10 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,17 +14,17 @@ import java.util.ResourceBundle;
 public class AccountInfoController extends Controller implements Initializable {
 
     @FXML
-    private Label label_name;
+    private TextField tf_name;
     @FXML
-    private Label label_email;
+    private TextField tf_email;
     @FXML
-    private Label label_phone;
+    private TextField tf_phone;
     @FXML
-    private Label label_address;
+    private TextField tf_address;
     @FXML
-    private Label label_username;
+    private TextField tf_username;
     @FXML
-    private Label label_role;
+    private TextField tf_role;
 
     @FXML
     private Button button_back;
@@ -87,11 +84,11 @@ public class AccountInfoController extends Controller implements Initializable {
 
     public void getUser(User user) {
         this.user = user;
-        label_username.setText("Username: " + username);
-        label_role.setText("Role: " + role);
-        label_name.setText("Name: " + user.getName());
-        label_email.setText("Email: " + user.getEmail());
-        label_phone.setText("Phone: " + user.getPhone());
-        label_address.setText("Address: " + user.getAddress());
+        tf_username.setText(username);
+        tf_role.setText(role);
+        tf_name.setText(user.getName());
+        tf_email.setText(user.getEmail());
+        tf_phone.setText(user.getPhone());
+        tf_address.setText(user.getAddress());
     }
 }

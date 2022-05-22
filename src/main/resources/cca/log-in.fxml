@@ -8,33 +8,33 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cca.controllers.LogInController">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="213.0" style="-fx-background-color: #FFFACD;">
+      <AnchorPane prefHeight="400.0" prefWidth="250.0" style="-fx-background-color: #DCDCDC;">
          <children>
             <ImageView blendMode="DARKEN" fitHeight="184.0" fitWidth="234.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@logo.jpg" />
                </image>
             </ImageView>
-            <ImageView blendMode="DARKEN" fitHeight="151.0" fitWidth="234.0" layoutX="-1.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView blendMode="DARKEN" fitHeight="188.0" fitWidth="200.0" layoutX="23.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@logo2.png" />
+                  <Image url="@logo3.jpg" />
                </image>
             </ImageView>
             <Label alignment="CENTER" blendMode="DARKEN" layoutX="-1.0" layoutY="149.0" prefHeight="84.0" prefWidth="234.0" text="CITYCON">
                <font>
-                  <Font name="Georgia" size="47.0" />
+                  <Font name="Georgia" size="50.0" />
                </font>
                <textFill>
                   <LinearGradient endX="1.0" endY="1.0">
                      <stops>
                         <Stop>
                            <color>
-                              <Color red="0.8736842274665833" green="0.5511760711669922" blue="0.03235867619514465" />
+                              <Color red="0.08065497130155563" green="0.0804678350687027" blue="0.08421052992343903" />
                            </color>
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="0.15117284655570984" green="0.08931773900985718" blue="0.8315789699554443" />
+                              <Color red="0.17894737422466278" green="0.4350877106189728" blue="0.9473684430122375" />
                            </color>
                         </Stop>
                      </stops>
@@ -43,44 +43,44 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="400.0" prefWidth="383.0" style="-fx-background-color: #CD853F;">
+      <AnchorPane prefHeight="400.0" prefWidth="383.0" style="-fx-background-color: #C0C0C0;">
          <children>
-            <ImageView blendMode="DARKEN" fitHeight="150.0" fitWidth="200.0" layoutX="84.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView blendMode="DARKEN" fitHeight="150.0" fitWidth="200.0" layoutX="110.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@loginlogo.jpg" />
+                  <Image url="@signin.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="185.0" prefHeight="38.0" prefWidth="128.0" text="USERNAME">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="190.0" prefHeight="30.0" prefWidth="120.0" text="USERNAME">
                <font>
-                  <Font name="Inter Regular" size="20.0" />
+                  <Font name="Arial" size="20.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="239.0" prefHeight="38.0" prefWidth="128.0" text="PASSWORD">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="240.0" prefHeight="30.0" prefWidth="120.0" text="PASSWORD">
                <font>
-                  <Font name="Inter Regular" size="20.0" />
+                  <Font name="Arial" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="tf_username" layoutX="153.0" layoutY="189.0" prefHeight="30.0" prefWidth="200.0" promptText="Enter Username">
+            <TextField fx:id="tf_username" layoutX="140.0" layoutY="190.0" prefHeight="30.0" prefWidth="210.0" promptText="Enter Username">
                <font>
                   <Font name="Arial Rounded MT Bold" size="15.0" />
                </font>
             </TextField>
-            <Button fx:id="button_login" layoutX="194.0" layoutY="290.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="LOG IN" textFill="#1f1f20">
+            <Button fx:id="button_login" layoutX="10.0" layoutY="290.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="340.0" style="-fx-background-color: #708090; -fx-cursor: hand; -fx-background-radius: 15;" text="LOG IN" textFill="#1f1f20">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
                </font>
             </Button>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="347.0" prefHeight="38.0" prefWidth="184.0" text="Don't have an account?">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="365.0" prefHeight="30.0" prefWidth="184.0" text="Don't have an account?">
                <font>
-                  <Font name="Inter Regular" size="15.0" />
+                  <Font name="Arial" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="button_sign_up" layoutX="184.0" layoutY="352.0" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT; -fx-cursor: hand;" text="SIGN UP" textFill="#1e0d8c" underline="true">
+            <Button fx:id="button_sign_up" layoutX="220.0" layoutY="365.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" style="-fx-background-color: TRANSPARENT; -fx-cursor: hand;" text="SIGN UP" textFill="#17097e" underline="true">
                <font>
                   <Font name="Arial Rounded MT Bold" size="15.0" />
                </font>
             </Button>
-            <PasswordField fx:id="tf_password" layoutX="153.0" layoutY="243.0" prefHeight="30.0" prefWidth="200.0" promptText="Enter Password">
+            <PasswordField fx:id="tf_password" layoutX="140.0" layoutY="240.0" prefHeight="30.0" prefWidth="210.0" promptText="Enter Password">
                <font>
                   <Font name="Arial Rounded MT Bold" size="15.0" />
                </font>

@@ -10,6 +10,7 @@ module sample.civilconstructionapp {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires java.sql;
+    requires org.testng;
 
     opens cca to javafx.fxml;
     exports cca;

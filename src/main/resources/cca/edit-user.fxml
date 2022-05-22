@@ -6,19 +6,14 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFACD;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cca.controllers.UserEditController">
     <top>
-        <AnchorPane prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #FF7F50;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #696969;" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" layoutX="154.0" layoutY="22.0" prefHeight="7.0" prefWidth="292.0" text="Edit Account">
+                <Label alignment="CENTER" layoutX="139.0" layoutY="9.0" prefHeight="30.0" prefWidth="321.0" text="EDIT PROFILE">
                     <font>
-                        <Font name="Arial Rounded MT Bold" size="30.0" />
+                        <Font name="Arial Rounded MT Bold" size="25.0" />
                     </font>
                 </Label>
-                <Button fx:id="button_back" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="BACK">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="20.0" />
-                    </font>
-                </Button>
-                <Button fx:id="button_save" layoutX="499.0" layoutY="14.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="86.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="SAVE" textAlignment="CENTER">
+                <Button fx:id="button_back" layoutX="10.0" layoutY="7.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #708090; -fx-cursor: hand; -fx-background-radius: 15;" text="BACK">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="20.0" />
                     </font>
@@ -27,14 +22,14 @@
         </AnchorPane>
     </top>
     <bottom>
-        <AnchorPane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #FF7F50;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #696969;" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="label_username" layoutX="14.0" layoutY="15.0" prefHeight="19.0" prefWidth="436.0" text="You are logged in as:">
+                <Label fx:id="label_username" layoutX="14.0" layoutY="13.0" prefHeight="20.0" prefWidth="450.0" text="You are logged in as:">
                     <font>
-                        <Font name="Inter Regular" size="15.0" />
+                        <Font name="Arial" size="20.0" />
                     </font>
                 </Label>
-                <Button fx:id="button_logout" layoutX="464.0" layoutY="7.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="121.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="LOG OUT">
+                <Button fx:id="button_logout" layoutX="465.0" layoutY="7.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #708090; -fx-cursor: hand; -fx-background-radius: 15;" text="LOG OUT">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="20.0" />
                     </font>
@@ -42,33 +37,38 @@
             </children>
         </AnchorPane>
     </bottom>
-   <center>
-        <AnchorPane prefHeight="270.0" prefWidth="606.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
+    <center>
+        <AnchorPane prefHeight="297.0" prefWidth="600.0" style="-fx-background-color: #C0C0C0;" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="label_name" layoutX="14.0" layoutY="14.0" prefHeight="23.0" prefWidth="512.0" text="Name:">
+                <Label fx:id="label_name" layoutX="20.0" layoutY="20.0" prefHeight="30.0" prefWidth="100.0" text="Name:">
                     <font>
                         <Font name="Arial" size="20.0" />
                     </font>
                 </Label>
-                <Label fx:id="label_email" layoutX="14.0" layoutY="54.0" prefHeight="23.0" prefWidth="512.0" text="Email:">
+                <Label fx:id="label_email" layoutX="20.0" layoutY="70.0" prefHeight="30.0" prefWidth="100.0" text="Email:">
                     <font>
                         <Font name="Arial" size="20.0" />
                     </font>
                 </Label>
-                <Label fx:id="label_phone" layoutX="14.0" layoutY="92.0" prefHeight="23.0" prefWidth="512.0" text="Phone">
+                <Label fx:id="label_phone" layoutX="20.0" layoutY="120.0" prefHeight="30.0" prefWidth="100.0" text="Phone:">
                     <font>
                         <Font name="Arial" size="20.0" />
                     </font>
                 </Label>
-                <Label fx:id="label_address" layoutX="14.0" layoutY="135.0" prefHeight="23.0" prefWidth="512.0" text="Address:">
+                <Label fx:id="label_address" layoutX="20.0" layoutY="170.0" prefHeight="30.0" prefWidth="100.0" text="Address:">
                     <font>
                         <Font name="Arial" size="20.0" />
                     </font>
                 </Label>
-            <TextField fx:id="tf_name" layoutX="127.0" layoutY="13.0" prefHeight="26.0" prefWidth="300.0" />
-            <TextField fx:id="tf_email" layoutX="127.0" layoutY="90.0" prefHeight="26.0" prefWidth="300.0" />
-            <TextField fx:id="tf_phone" layoutX="127.0" layoutY="52.0" prefHeight="26.0" prefWidth="300.0" />
-            <TextField fx:id="tf_address" layoutX="127.0" layoutY="133.0" prefHeight="26.0" prefWidth="300.0" />
+                <TextField fx:id="tf_name" layoutX="130.0" layoutY="20.0" prefHeight="30.0" prefWidth="350.0" />
+                <TextField fx:id="tf_email" layoutX="130.0" layoutY="70.0" prefHeight="30.0" prefWidth="350.0" />
+                <TextField fx:id="tf_phone" layoutX="130.0" layoutY="120.0" prefHeight="30.0" prefWidth="350.0" />
+                <TextField fx:id="tf_address" layoutX="130.0" layoutY="170.0" prefHeight="30.0" prefWidth="350.0" />
+            <Button fx:id="button_save" layoutX="465.0" layoutY="250.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #708090; -fx-cursor: hand; -fx-background-radius: 15;" text="SAVE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
+               </font>
+            </Button>
             </children></AnchorPane>
-   </center>
+    </center>
 </BorderPane>

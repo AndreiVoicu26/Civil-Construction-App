@@ -6,14 +6,14 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFACD;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cca.controllers.AdsListController">
     <top>
-        <AnchorPane prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #FF7F50;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #696969;" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" layoutX="139.0" layoutY="15.0" prefHeight="36.0" prefWidth="321.0" text="Your announcements">
+                <Label alignment="CENTER" layoutX="107.0" layoutY="9.0" prefHeight="30.0" prefWidth="385.0" text="YOUR ANNOUNCEMENTS">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="25.0" />
                     </font>
                 </Label>
-            <Button fx:id="button_back" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="89.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="BACK">
+            <Button fx:id="button_back" layoutX="10.0" layoutY="7.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #708090; -fx-cursor: hand; -fx-background-radius: 15;" text="BACK">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
                </font>
@@ -22,14 +22,14 @@
         </AnchorPane>
     </top>
     <bottom>
-        <AnchorPane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #FF7F50;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #696969;" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="label_username" layoutX="14.0" layoutY="15.0" prefHeight="19.0" prefWidth="436.0" text="You are logged in as:">
+                <Label fx:id="label_username" layoutX="14.0" layoutY="13.0" prefHeight="20.0" prefWidth="450.0" text="You are logged in as:">
                     <font>
-                        <Font name="Inter Regular" size="15.0" />
+                        <Font name="Arial" size="20.0" />
                     </font>
                 </Label>
-                <Button fx:id="button_logout" layoutX="464.0" layoutY="7.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="121.0" style="-fx-background-color: #A52A2A; -fx-cursor: hand;" text="LOG OUT">
+                <Button fx:id="button_logout" layoutX="465.0" layoutY="7.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #708090; -fx-cursor: hand; -fx-background-radius: 15;" text="LOG OUT">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="20.0" />
                     </font>
@@ -38,9 +38,10 @@
         </AnchorPane>
     </bottom>
     <center>
-        <AnchorPane prefHeight="270.0" prefWidth="508.0" style="-fx-background-color: #FFE4B5;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="290.0" prefWidth="600.0" style="-fx-background-color: #C0C0C0;" BorderPane.alignment="CENTER">
          <children>
-            <ListView fx:id="announcementListView" layoutY="-1.0" prefHeight="285.0" prefWidth="600.0" style="-fx-background-color: #FFE4B5;" />
-         </children></AnchorPane>
+            <ListView fx:id="announcementListView" blendMode="DARKEN" layoutX="1.0" prefHeight="300.0" prefWidth="600.0" />
+         </children>
+        </AnchorPane>
     </center>
 </BorderPane>
